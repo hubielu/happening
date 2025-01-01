@@ -627,7 +627,7 @@ const MainPage = ({ user, onSignOut }) => {
       <div>
        {/*<h1 className="welcome-heading">Welcome, {user.displayName}!</h1>*/}
       </div>
-      <h2>The best career and networking events around Stanford, Palo Alto, and SF—all in one place.</h2>
+      <h2>The best career and networking events around Stanford, Palo Alto, hihihihihiand SF—all in one place.</h2>
       <Header events={events} /> {/* Pass events to Header */}
        {/*<Brand />
       <WhatNETWORKINSIDER />
