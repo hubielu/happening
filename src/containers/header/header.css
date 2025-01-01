@@ -1,0 +1,197 @@
+.error-message {
+    color: #ff0000;
+    margin-top: 10px;
+  }
+  
+  
+  
+  
+  
+  .NI__header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;/* Make the header take up the full width */
+}
+
+/*Move Weekly Newsletter Section Up and Down!!!!!*/
+.NI__header-content {
+    position: relative; /* Default state */
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 2.4rem 0rem;
+    width: 42%; /* Set the content to take up only the right half */
+    margin-left: auto;
+}
+
+.NI__header-title h1 {
+    font-family: var(--font-family-header);
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 50px;
+    letter-spacing: 0.01em; /* Letter spacing */
+}
+
+
+.NI__header-content p {
+    font-family: var(--font-family-header);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0em;
+    line-height: 28px;
+    color: #000;
+    margin-top: 0.2rem;/*1.1rem; <<><><><><><><><><><><><>*/
+    line-height: 127.5%;
+}
+
+
+.NI__header-content__input {
+    width: 100%;
+    margin: 2rem 0 1rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.NI__header-content__input input {
+    flex: 2;
+    width: 100%;
+    min-height: 50px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    background: #fdfbf1;
+    border: 1.5px solid #8c1515;
+    padding: 0 1rem;
+    outline: none;
+    color: #000;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.NI__header-content__input button {
+    flex: 0.6;
+    width: 100%;
+    min-height: 50px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+    border: none;
+    padding: 0 1rem;
+    color: #fff !important;
+    cursor: pointer;
+    outline: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    position: relative;
+    z-index: 1;
+    transition: background 1s ease; /*0.3s ease;*/
+}
+
+.NI__header-content__input button:hover {
+    background: linear-gradient(90deg, rgba(163, 90, 211, 1) 0%, rgba(213, 125, 104, 1) 76%, rgba(223, 131, 83, 1) 100%);
+}
+
+.NI__header-content__input button.subscribed {
+    background: #4CAF50;  /* A nice green color for the subscribed state */
+}
+
+.NI__header-content__people {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 2rem;
+}
+
+.NI__header-content__people img {
+    width: 181.79px;
+    height: 38px;
+}
+
+.NI__header-content__people p {
+    margin: 0 0 0 1rem;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 38px;
+    color: #000;
+    text-align: center;
+}
+
+.NI__header-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+}
+
+.NI__header-image img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Add dynamic event-related padding or height adjustment */
+.NI__header-content.dynamic-height {
+    padding-bottom: auto;  /* Automatically adjust based on event count */
+}
+
+@media screen and (max-width: 1050px) {
+    .NI__header {
+        flex-direction: column;
+    }
+
+    .NI__header-content {
+        margin: 0 0 3rem;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .NI__header-content h1 {
+        font-size: 48px;
+        line-height: 60px;
+    }
+
+    .NI__header-content p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+    
+    .NI__header-content__people {
+        flex-direction: column;
+    }
+
+    .NI__header-content__people p {
+        margin: 0;
+    }
+
+    .NI__header-content__input input,
+    .NI__header-content__input button {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .NI__header-content h1 {
+        font-size: 36px;
+        line-height: 48px;
+    }
+
+    .NI__header-content p {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .NI__header-content__input input,
+    .NI__header-content__input button {
+        font-size: 12px;
+        line-height: 16px;
+    }
+}

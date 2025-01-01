@@ -1,0 +1,81 @@
+.profile-dropdown {
+    position: relative;
+  }
+  
+  .profile-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+
+
+
+
+
+
+
+/*
+  
+    background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 200px; /* Adjust the width if necessary 
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+  }*/
+  .dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #fdfbf1;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .dropdown-menu.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  
+  .user-info p {
+    margin: 0.2rem 0;
+    font-size: 14px;
+    text-align: center;
+    font-family: var(--font-family-header);
+    background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .sign-out-btn {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+    color: white;
+    font-family: var(--font-family-header);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sign-out-btn:hover {
+    background: linear-gradient(90deg, rgba(163, 90, 211, 1) 0%, rgba(213, 125, 104, 1) 76%, rgba(223, 131, 83, 1) 100%);
+}

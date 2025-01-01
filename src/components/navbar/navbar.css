@@ -1,0 +1,75 @@
+.NI__navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0rem;
+}
+
+.NI__navbar-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.NI__navbar-links_logo {
+    margin-right: 2rem;
+}
+
+.NI__navbar-links_logo img {
+    width: 62.56px;
+    height: 16.02px;
+}
+
+.NI__navbar-links_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.NI__navbar-links_container p {
+    color: #000;
+    font-family: var(--font-family-header);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+.NI__navbar-profile {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0rem 1.6rem;
+}
+
+.NI__navbar-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.gradient-text {
+    font-size: 3rem; /* Adjust as needed */
+    font-weight: bold; /* Optional for emphasis */
+    background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 700px) {
+    .NI__navbar {
+        padding: 2rem 4rem;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .NI__navbar {
+        padding: 2rem;
+    }
+}
