@@ -13,8 +13,30 @@ import { CiLocationOn } from "react-icons/ci";
 import { FiArrowUpRight } from "react-icons/fi";
 import { FaPizzaSlice } from "react-icons/fa";
 import { GiBoba } from "react-icons/gi";
+import { Helmet } from 'react-helmet';
 {/*import people from 'assets/people.png';
 import './header.css';*/}
+
+const Sitemap = () => {
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url>
+        <loc>https://happening.college/</loc>
+      </url>
+      <url>
+        <loc>https://happening.college/login</loc>
+      </url>
+      <url>
+        <loc>https://happening.college/stanford</loc>
+      </url>
+    </urlset>`;
+
+  return (
+    <div>
+      <pre>{sitemap}</pre>
+    </div>
+  );
+};
 
 const Header = ({ events }) => {
   const [email, setEmail] = useState('');
@@ -214,13 +236,21 @@ const isToday = (dateString) => {
 };
 
 const LoginPage = ({ onSignIn }) => (
-  <div className="login-page">
-    <div className="gradient-outline-box">
-      <h1>Welcome to <span className="gradient__text">Network Insider</span></h1>
-      <p>All networking events at Stanford and in the Bay Area</p>
-      <button onClick={onSignIn} className="sign-in-btn">Sign in</button>
+  <>
+    <Helmet>
+      <title>Happening</title>
+      <meta name="description" content="Sign in to Happening at Stanford - Your go-to guide for events and activities at Stanford University." />
+      <meta name="keywords" content="Stanford, events, login, student activities" />
+      {/*<link rel = "canonical" href = "/login" />*/}
+    </Helmet>
+    <div className="login-page">
+      <div className="gradient-outline-box">
+        <h1>Welcome to <span className="gradient__text">Happening</span></h1>
+        <p>Your go-to guide to everything happening at Stanford.</p>
+        <button onClick={onSignIn} className="sign-in-btn">Sign in</button>
+      </div>
     </div>
-  </div>
+  </>
 );
 
 const ProfileDropdown = ({ user, onSignOut }) => {
@@ -403,14 +433,16 @@ const EventList = ({ events }) => {
         onChange={(e) => setSelectedField(e.target.value)}
         className={`field-filter ${!hasTodayEvents ? 'no-today-events' : ''}`}
       >
-        <option value="all">All Fields</option>
-        <option value="healthcare">Healthcare</option>
-        <option value="sustainability">Sustainability</option>
-        <option value="entrepreneurship">Entrepreneurship</option>
-        <option value="ai/tech">AI/Tech</option>
-        <option value="finance">Finance</option>
+      
+        <option value="all">All Events</option>
+        <option value="academic">Academic</option>
+        <option value="arts">Arts & Culture</option>
         <option value="career">Career</option>
-        <option value="other">Other</option>
+        <option value="social">Social</option>
+        <option value="sports">Sports</option>
+        <option value="student-orgs">Student Organizations</option>
+        <option value="wellness">Health & Wellness</option>
+        <option value="service">Community Service</option>
       </select>
 
       <div className="event-list">
@@ -608,7 +640,7 @@ const MainPage = ({ user, onSignOut }) => {
       isMounted = false;
       clearInterval(interval);
     };
-  }, []); // Empty dependency array for initial load // Empty dependency array to run only once when the component mounts
+  }, []);
 
   const filterUpcomingEvents = (events) => {
     const today = new Date();
@@ -620,23 +652,21 @@ const MainPage = ({ user, onSignOut }) => {
   };
 
   return (
-    <div className="App">
-      <div className="gradient__bg">
-        <Navbar user={user} onSignOut={onSignOut} />
+    <>
+      <Helmet>
+        <title>Happening</title>
+        <meta name="description" content="Discover and explore events happening at Stanford University. Your comprehensive guide to campus activities, talks, and more." />
+        <meta name="keywords" content="Stanford events, campus activities, student life, Stanford University" />
+      </Helmet>
+      <div className="App">
+        <div className="gradient__bg">
+          <Navbar user={user} onSignOut={onSignOut} />
+        </div>
+        <h2>Your guide to everything happening on Stanford.</h2>
+        <Header events={events} />
+        <Footer />
       </div>
-      <div>
-       {/*<h1 className="welcome-heading">Welcome, {user.displayName}!</h1>*/}
-      </div>
-      <h2>The best career and networking events around Stanford, Palo Alto, hihihihihiand SF—all in one place.</h2>
-      <Header events={events} /> {/* Pass events to Header */}
-       {/*<Brand />
-      <WhatNETWORKINSIDER />
-      <Features />
-      <Possibility />
-      <CTA />
-      <Blog />*/}
-      <Footer />
-    </div>
+    </>
   );
 };
 
@@ -675,21 +705,15 @@ const App = () => {
 
   return (
     <ParallaxProvider>
-    <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/dashboard" /> : <LoginPage onSignIn={signInWithGoogle} />}
-        />
-        <Route
-          path="/dashboard"
-          element={user ? <MainPage user={user} onSignOut={handleSignOut} /> : <Navigate to="/login" />}
-        />
-        <Route path="*" element={<Navigate to="/login" />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/login" element={user ? <Navigate to="/stanford" /> : <LoginPage onSignIn={signInWithGoogle} />} />
+          <Route path="/stanford" element={user ? <MainPage user={user} onSignOut={handleSignOut} /> : <Navigate to="/login" />} />
+          <Route path="/sitemap.xml" element={<Sitemap />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
     </ParallaxProvider>
-
   );
 };
 

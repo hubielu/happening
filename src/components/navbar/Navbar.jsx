@@ -22,7 +22,7 @@ const Navbar = ({ user, onSignOut }) => {
     <div className="NI__navbar">
       <div className="NI__navbar-left">
       <a href="https://networkinsider.com" target="_self">
-          <h2 className="gradient-text">Network Insider</h2>
+          <h2 className="gradient-text">Happening.</h2>
         </a>
       </div>
       <div className="NI__navbar-links">

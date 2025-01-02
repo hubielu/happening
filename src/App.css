@@ -1,3 +1,147 @@
+.navigation-buttons {
+  gap: 4px;
+}
+
+@media screen and (max-width: 360px) {
+  .navigation-buttons button {
+      width: 28px;
+      height: 28px;
+  }
+  
+  .close-btn {
+      width: 28px;
+      height: 28px;
+  }
+}
+
+/* Optimize event time container for smaller screens */
+@media screen and (max-width: 480px) {
+  .event-time-container {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  
+  .event-date-time {
+      margin-top: 10px;
+  }
+}
+
+
+@media screen and (max-width: 1366px) {
+  .event-list {
+      width: 95%;
+      margin: -30px auto 20px auto;
+  }
+  
+  .event-item {
+      width: 90%;
+  }
+  
+  .welcome-heading {
+      padding: 1.5rem 2rem;
+      font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .NI__header-content {
+      width: 80%;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+  }
+  
+  .event-list {
+      width: 100%;
+  }
+  
+  h2 {
+      padding: 1.5rem 4rem;
+      font-size: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gradient-outline-box {
+      padding: clamp(2rem, 3vw, 5rem) clamp(2rem, 5vw, 7rem);
+  }
+  
+  .event-item {
+      width: 95%;
+      margin: 10px auto;
+  }
+  
+  .welcome-heading {
+      font-size: 1.5rem;
+      padding: 1rem 1.5rem;
+  }
+  
+  .NI__header-content__input {
+      flex-direction: column;
+      gap: 10px;
+  }
+  
+  .NI__header-content__input input,
+  .NI__header-content__input button {
+      border-radius: 5px;
+      width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .event-list {
+      width: 100%;
+      margin: -20px auto 10px auto;
+  }
+  
+  .event-item {
+      width: 90%;
+  }
+  
+  h2 {
+      font-size: 2rem;
+      padding: 1rem 2rem;
+  }
+  
+  .field-filter {
+      width: 80%;
+      margin: 0 auto 15px;
+  }
+  
+  .modal-content {
+      width: 95%;
+      margin: 10px;
+  }
+  
+  .calendar-icon {
+      width: 40px;
+      height: 40px;
+  }
+  
+  .location-icon {
+      width: 40px;
+      height: 40px;
+  }
+}
+
+/* Additional responsive adjustments for modal */
+@media screen and (max-width: 600px) {
+  .modal-content {
+      max-width: 100%;
+      height: 100vh;
+      margin: 0;
+      border-radius: 0;
+  }
+  
+  .modal-icons {
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+}
+
+
+
+
+
 .modal-icons {
   display: flex;
   justify-content: center;
@@ -77,7 +221,7 @@
   outline: none;
   color: #000;
   border-radius: 5px;
-  margin-left: 600.5px;
+  margin-left: 670.5px;
   cursor: pointer;
   z-index: 100;
   margin-bottom: -15px; /* Default spacing */
@@ -672,15 +816,13 @@
 
 /* Center the event list and make it narrower */
 .event-list {
-  display: flex; /* Use flex for layout */
-  flex-direction: column; /* Stack events vertically */
-  align-items: flex-start; /* Align items to the start */
-  gap: 10px; /* Spacing between event items */
-  width: 91.3%; /* Ensure it adjusts to the container's width */
-  max-height: none; /* Allow unrestricted height */
-  overflow-y: visible; /* Allow visibility for children */
-  margin: -30px auto 20px -30px; /* Centering */
-  scroll-behavior: smooth; /* Smooth scrolling for the event list */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 91.3%;
+  margin: -30px auto 20px auto;
+  scroll-behavior: smooth;
 }
 
 
@@ -809,9 +951,9 @@ h2 {
   text-align: center;
   display: inline-block;
   width: fit-content;  /* Let width adjust to fit content */
-  padding: 1.5rem 4.1rem;
+  padding: 1.5rem 8.7rem;
 }
-
+/*Your guide to everything happening on Stanford.   linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%); */
 /* For location text */
 .event-item .location {
   /*margin: 0.5rem 0;
@@ -938,6 +1080,25 @@ a {
 .login-page .sign-in-btn:hover {
   transform: scale(1.05);
 }
+/*
+
+MAKE IT ALL GRADIENT PINK:
+
+.login-page .sign-in-btn {
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  color: white;
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.login-page .sign-in-btn:hover {
+  transform: scale(1.05);
+}
 
 /*
 
@@ -957,12 +1118,13 @@ Outer box outline without curvy corners, however able to adjust thickness
 
 .gradient-outline-box {
   position: relative;
-  padding: 2rem;
   display: inline-block;
   text-align: center;
-  border-radius: 25px; 
-  padding: 7rem 9rem;
-  background: #f5efe1; 
+  border-radius: 25px;
+  background: #f5efe1;
+  padding: clamp(3rem, 5vw, 7rem) clamp(4rem, 7vw, 9rem);
+  max-width: 90vw;
+  margin: 1rem;
 }
 
 .gradient-outline-box::before {
@@ -977,7 +1139,20 @@ Outer box outline without curvy corners, however able to adjust thickness
   background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
 }
 
-
+@media screen and (max-width: 768px) {
+  .login-page h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  
+  .login-page p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+  }
+  
+  .login-page .sign-in-btn {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    padding: 0.5rem 1.5rem;
+  }
+}
 
 
 

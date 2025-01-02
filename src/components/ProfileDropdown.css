@@ -7,8 +7,10 @@
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
+    margin-bottom: 30px;
+    margin-right: 0px;
   }
-  
+
 
 
 
@@ -58,6 +60,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    font-weight: 500;
   }
   
   .sign-out-btn {

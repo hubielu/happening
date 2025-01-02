@@ -39,7 +39,7 @@ const Footer = () => (
     </div>
 
     <div className="NI__footer-copyright">
-  <a href="mailto:networkinsiderteam@gmail.com">networkinsiderteam@gmail.com</a>
+  <a href="mailto:happening.college@gmail.com">happening.college@gmail.com</a>
 </div>
 
   </div>

@@ -59,6 +59,8 @@
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
+    margin-bottom: 30px;
+    margin-left: -75px;
 }
 
 /* Responsive Design */
