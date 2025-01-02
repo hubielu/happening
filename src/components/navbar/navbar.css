@@ -64,14 +64,45 @@
 }
 
 /* Responsive Design */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 576px) {
     .NI__navbar {
-        padding: 2rem 4rem;
+      padding: 0.5rem;
+      position: relative;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-}
-
-@media screen and (max-width: 550px) {
-    .NI__navbar {
-        padding: 2rem;
+  
+    .gradient-text {
+      font-size: 1.5rem;
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+      left: -4%;
     }
-}
+  
+    .NI__navbar-profile {
+      padding: 0;
+      position: absolute;
+      top: 80%;
+      right: 1rem;
+      transform: translateY(-50%);
+    }
+  
+    .NI__navbar-profile img {
+      width: 35px;
+      height: 35px;
+    }
+  
+    /* Ensure other elements don't interfere */
+    .NI__navbar-links {
+      display: none;
+    }
+  
+    .NI__navbar-left {
+      width: auto;
+    }
+  }
