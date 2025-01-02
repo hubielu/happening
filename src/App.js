@@ -240,7 +240,7 @@ const LoginPage = ({ onSignIn }) => (
     <Helmet>
       <title>Happening</title>
       <meta name="description" content="Sign in to Happening at Stanford - Your go-to guide for events and activities at Stanford University." />
-      <meta name="keywords" content="Stanford, events, login, student activities" />
+      <meta name="keywords" content="Stanford Happening, Stanford Happening login, Happening login, Stanford events" />
       {/*<link rel = "canonical" href = "/login" />*/}
     </Helmet>
     <div className="login-page">
@@ -656,7 +656,7 @@ const MainPage = ({ user, onSignOut }) => {
       <Helmet>
         <title>Happening</title>
         <meta name="description" content="Discover and explore events happening at Stanford University. Your comprehensive guide to campus activities, talks, and more." />
-        <meta name="keywords" content="Stanford events, campus activities, student life, Stanford University" />
+        <meta name="keywords" content="Stanford events, Stanford activities, Stanford student life, Stanford University" />
       </Helmet>
       <div className="App">
         <div className="gradient__bg">
@@ -672,14 +672,12 @@ const MainPage = ({ user, onSignOut }) => {
 
 
 const App = () => {
-  
   const [user, setUser] = useState(null);
 
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-
       if (user.email.endsWith('@stanford.edu')) {
         setUser(user);
         console.log('Stanford email detected. User signed in:', user.email);
@@ -710,11 +708,13 @@ const App = () => {
           <Route path="/login" element={user ? <Navigate to="/stanford" /> : <LoginPage onSignIn={signInWithGoogle} />} />
           <Route path="/stanford" element={user ? <MainPage user={user} onSignOut={handleSignOut} /> : <Navigate to="/login" />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
     </ParallaxProvider>
   );
 };
+
 
 export default App;

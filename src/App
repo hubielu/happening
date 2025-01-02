@@ -1,0 +1,1255 @@
+.Footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.newsletter-subscription {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .event-list {
+    width: 100%;
+    padding: 0 -10rem;
+  }
+  
+  .field-filter {
+    width: 80%;
+    margin: 1rem auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
+    padding: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .Footer {
+    text-align: center;
+  }
+  
+  .Footer p,
+  .Footer h3,
+  .Footer .email {
+    text-align: center !important;
+  }
+  
+  .NI__header-content__input {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .NI__header-content__input input,
+  .NI__header-content__input button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+.navigation-buttons {
+  gap: 4px;
+}
+
+@media screen and (max-width: 360px) {
+  .navigation-buttons button {
+      width: 28px;
+      height: 28px;
+  }
+  
+  .close-btn {
+      width: 28px;
+      height: 28px;
+  }
+}
+
+/* Optimize event time container for smaller screens */
+@media screen and (max-width: 480px) {
+  .event-time-container {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  
+  .event-date-time {
+      margin-top: 10px;
+  }
+}
+
+
+@media screen and (max-width: 1366px) {
+  .event-list {
+      width: 95%;
+      margin: -30px auto 20px auto;
+  }
+  
+  .event-item {
+      width: 90%;
+  }
+  
+  .welcome-heading {
+      padding: 1.5rem 2rem;
+      font-size: 1.8rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .NI__header-content {
+      width: 80%;
+      margin: 0 auto;
+      padding: 1.5rem 0;
+  }
+  
+  .event-list {
+      width: 100%;
+  }
+  
+  h2 {
+      padding: 1.5rem 4rem;
+      font-size: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gradient-outline-box {
+      padding: clamp(2rem, 3vw, 5rem) clamp(2rem, 5vw, 7rem);
+  }
+  
+  .event-item {
+      width: 95%;
+      margin: 10px auto;
+  }
+  
+  .welcome-heading {
+      font-size: 1.5rem;
+      padding: 1rem 1.5rem;
+  }
+  
+  .NI__header-content__input {
+      flex-direction: column;
+      gap: 10px;
+  }
+  
+  .NI__header-content__input input,
+  .NI__header-content__input button {
+      border-radius: 5px;
+      width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .event-list {
+      width: 100%;
+      margin: -20px auto 10px auto;
+  }
+  
+  .event-item {
+      width: 90%;
+  }
+  
+  h2 {
+      font-size: 2rem;
+      padding: 1rem 2rem;
+  }
+  
+  .field-filter {
+      width: 80%;
+      margin: 0 auto 15px;
+  }
+  
+  .modal-content {
+      width: 95%;
+      margin: 10px;
+  }
+  
+  .calendar-icon {
+      width: 40px;
+      height: 40px;
+  }
+  
+  .location-icon {
+      width: 40px;
+      height: 40px;
+  }
+}
+
+/* Additional responsive adjustments for modal */
+@media screen and (max-width: 600px) {
+  .modal-content {
+      max-width: 100%;
+      height: 100vh;
+      margin: 0;
+      border-radius: 0;
+  }
+  
+  .modal-icons {
+      flex-wrap: wrap;
+      gap: 10px;
+  }
+}
+
+
+
+
+
+.modal-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #eaeaea;
+}
+
+.icon-tooltip {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon-tooltip:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  font-family: var(--font-family-header);
+  margin-bottom: 5px;
+}
+
+.event-item h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.event-item h3 svg {
+  flex-shrink: 0;
+}
+
+
+
+
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 8px;
+  font-family: var(--font-family-header);
+}
+
+.NI__header-content__input button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: #cccccc;
+}
+
+
+
+
+.field-filter {
+  width: 240px;
+  min-height: 30px;
+  font-family: var(--font-family-header);
+  font-weight: 400;
+  font-size: 16px;
+  background: #fdfbf1;
+  border: 1.5px solid #8c1515;
+  padding: 0 1rem;
+  outline: none;
+  color: #000;
+  border-radius: 5px;
+  margin-left: 630.5px;
+  cursor: pointer;
+  z-index: 100;
+  margin-bottom: -15px; /* Default spacing */
+}
+
+/* Add this new class for when there are no today's events */
+.field-filter.no-today-events {
+  margin-bottom: 2px;
+}
+
+
+.field-filter:hover {
+  border-color: #C94747;
+}
+
+.field-filter option {
+  background: #fdfbf1;
+  color: #000;
+  padding: 10px;
+}
+
+.event-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+.rsvp-section p {
+  margin: 5px 0 15px 0; /* Reduced top margin, increased bottom margin */
+}
+
+.rsvp-section h3 {
+  margin-bottom: 8px; /* Reduced space below the "Registration" header */
+}
+
+.rsvp-section {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.rsvp-section h3 {
+  color: #8C1515;
+  font-family: var(--font-family-header);
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.rsvp-button {
+  width: 100%;
+  background: #8C1515;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-family-header);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.rsvp-button:hover {
+  background: #666;
+}
+
+.no-rsvp {
+  color: #666;
+  font-family: var(--font-family-header);
+  font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.location-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.location-icon {
+  margin-top: 10px;
+  color: #8C1515;
+  background: #f5f5f5;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 10px;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.location-text {
+  margin-top: 10px;
+  color: #4A4A4A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-family-header);
+  font-size: 19px;
+  font-weight: bold;
+  color: #8C1515;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  color:#8C1515;
+}
+
+.modal-content p:last-of-type {
+  margin-top: 20px;
+  line-height: 22px;
+}
+
+
+
+
+
+
+
+/* Event time container */
+.event-time-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-family: var(--font-family-header);
+}
+
+/* Calendar icon */
+.calendar-icon {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-weight: bold;
+  overflow: hidden;
+  font-family: var(--font-family-header);
+}
+
+/* Top half of the calendar */
+.calendar-month {
+  background-color: #8C1515;
+  color: white;
+  width: 100%;
+  text-align: center;
+  line-height: 25px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+
+/* Bottom half of the calendar */
+.calendar-day {
+  background-color: #F5F5F5;
+  color: #4A4A4A;
+  width: 100%;
+  text-align: center;
+  line-height: 25px;
+  font-size: 18px;
+}
+
+
+/* Date and time display */
+.event-date-time {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: var(--font-family-header);
+}
+
+.event-date {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4A4A4A;
+  margin-bottom: 2px; /* Slightly reduce space to balance alignment */
+}
+
+.event-time {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #8C1515;
+  margin-top: -4px; /* Pushes it up slightly without interfering */
+}
+
+
+
+
+
+.icon-gradient {
+  color: #8C1515;
+  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: #fdfbf1;
+  max-width: 600px;
+  padding: 20px;
+  position: relative;
+  z-index: 1001;
+  overflow-y: auto;
+  height: 98vh;
+  width: calc(100% - 10px);
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.25s ease-in-out;
+  margin-right: 10px;
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateX(0);
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #fdfbf1;
+  border: none;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.close-btn svg {
+  font-size: 2px;
+  color: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+}
+
+
+.navigation-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.navigation-buttons button {
+  background: #fdfbf1;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation-buttons button svg {
+  font-size: 20px;
+}
+
+.navigation-buttons button:disabled {
+  opacity: 0.3;
+  cursor: default; /*not-allowed;*/
+}
+
+
+.event-item {
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.event-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+
+
+
+
+
+
+
+.event-list p {
+  font-family: var(--font-family-header); /* Replace with your desired font */
+}
+
+
+
+.error-message {
+  color: #ff0000;
+  margin-top: 10px;
+}
+
+
+
+
+
+
+.NI__header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;  /* Make the header take up the full width */
+}
+
+/*Move Weekly Newsletter Section Up and Down!!!!!*/
+.NI__header-content {
+  position: relative; /* Default state */
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 2.4rem 0rem;
+  width: 42%; /* Set the content to take up only the right half */
+  margin-left: auto;
+  
+}
+
+.NI__header-title h1 {
+  font-family: var(--font-family-header);
+  font-weight: bold;
+  font-size: 35px;
+  line-height: 50px;
+  letter-spacing: 0.01em; /* Letter spacing */
+}
+
+
+.NI__header-content p {
+  font-family: var(--font-family-header);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: 0em;
+  line-height: 28px;
+  color: #000;
+  margin-top: 0.2rem;/*1.1rem; <<><><><><><><><><><><><>*/
+  line-height: 127.5%;
+}
+
+
+.NI__header-content__input {
+  width: 100%;
+  margin: 2rem 0 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.NI__header-content__input input {
+  flex: 2;
+  width: 100%;
+  min-height: 50px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  background: #fdfbf1;
+  border: 1.5px solid #8c1515;
+  padding: 0 1rem;
+  outline: none;
+  color: #000;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.NI__header-content__input button {
+  flex: 0.6;
+  width: 100%;
+  min-height: 50px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  border: none;
+  padding: 0 1rem;
+  color: #fff !important;
+  cursor: pointer;
+  outline: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: relative;
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+
+.NI__header-content__input button.subscribed {
+  background: #4CAF50;  /* A nice green color for the subscribed state */
+}
+
+.NI__header-content__people {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.NI__header-content__people img {
+  width: 181.79px;
+  height: 38px;
+}
+
+.NI__header-content__people p {
+  margin: 0 0 0 1rem;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 38px;
+  color: #000;
+  text-align: center;
+}
+
+.NI__header-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+}
+
+.NI__header-image img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Add dynamic event-related padding or height adjustment */
+.NI__header-content.dynamic-height {
+  padding-bottom: auto;  /* Automatically adjust based on event count */
+}
+
+@media screen and (max-width: 1050px) {
+  .NI__header {
+      flex-direction: column;
+  }
+
+  .NI__header-content {
+      margin: 0 0 3rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .NI__header-content h1 {
+      font-size: 48px;
+      line-height: 60px;
+  }
+
+  .NI__header-content p {
+      font-size: 16px;
+      line-height: 24px;
+  }
+  
+  .NI__header-content__people {
+      flex-direction: column;
+  }
+
+  .NI__header-content__people p {
+      margin: 0;
+  }
+
+  .NI__header-content__input input,
+  .NI__header-content__input button {
+      font-size: 16px;
+      line-height: 24px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .NI__header-content h1 {
+      font-size: 36px;
+      line-height: 48px;
+  }
+
+  .NI__header-content p {
+      font-size: 14px;
+      line-height: 24px;
+  }
+
+  .NI__header-content__input input,
+  .NI__header-content__input button {
+      font-size: 12px;
+      line-height: 16px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+.newsletter-section {
+  margin: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.subscribe-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #8c1515;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.subscribe-btn:hover {
+  background-color: #a52828;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.event-list-container {
+  position: relative; /* Anchor the container */
+  top: 0; /* Ensure it starts at the top consistently */
+  margin-top: 20px; /* Add spacing from other elements, if needed */
+  padding: 10px; /* Optional: Add padding for aesthetics */
+  width: 100%; /* Ensure it spans the width if necessary */
+  box-sizing: border-box; /* Include padding in width calculations */
+  overflow: visible; /* Allow it to extend downward */
+}
+
+/* Center the event list and make it narrower */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 91.3%;
+  margin: -30px auto 20px auto;
+  scroll-behavior: smooth;
+}
+
+
+
+
+
+
+
+
+.welcome-heading {
+  font-family: var(--font-family-header); /* Choose any font family you like */
+  font-size: 2rem; /* Adjust the font size */
+  text-align: left; /* Center the text */
+  margin-top: 30px; /* Add top margin for spacing */
+  color:#8C1515; /* Text color */
+  padding: 1.95rem 4.1rem;
+}
+
+.event-date.today {
+  font-weight: bold;
+  /*color: #8C1515;*/
+  font-size: 35px;
+  background-image: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+  /*linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);*/
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;  /* Ensure the container fits the text */
+  width: fit-content;/* Set the text color to transparent to see the gradient*/
+  /*margin-bottom: 10px;*/
+}
+
+/* Center the event list and make it narrower 
+.event-list {
+  display: flex;
+  font-family: var(--font-family-header);
+  flex-direction: column;
+  gap: 10px;
+  max-height: infinite; 
+  overflow-y: auto; /* Changed from scroll 
+  margin: -30px auto 20px -30px;  /* Centering 
+  max-width: 86%;
+  scroll-behavior: smooth;  /* Make the event list smaller horizontally 
+  overflow: visible; /* Ensure visibility for scaled children 
+}
+*/
+/* Style each event item */
+.event-item {
+  background-color: #FEFBF1;
+  border: 1.5px solid #8C1515;  /* Thin border with HEX #8C1515 */
+  border-radius: 8px;
+  font-family: var(--font-family-header);
+  padding: 15px;
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+  transition: all 0.3s ease; /* Smooth transitions */
+  /*max-width: 400px;  /* Reduce width of event box */
+}
+/*
+.event-date.sticky {
+  position: sticky;
+  top: 0;
+  background-color: white;  /* Bubble background set to white 
+  padding: 5px 15px;  /* Adjust padding for smaller bubble 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  z-index: 1000;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  color: #8C1515;
+  font-weight: bold;
+  /* Make the bubble just behind the text 
+  width: fit-content;
+  margin-left: -10px;  /* Adjust position 
+}*/
+
+/* Non-sticky event-date */
+.event-date {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-family: var(--font-family-header);
+  font-size: 1.3rem;
+  background: #8C1515;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Styling for the event date format (e.g., Dec 27 Friday) */
+.event-item .event-date span.date {
+  font-weight: bold;
+}
+
+.event-item .event-date span.day {
+  font-weight: lighter;
+}
+
+/* Flexbox to order events by date and then by time */
+.event-item .time {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #8C1515; /* Add color to the time */
+}
+
+.event-item:hover {
+  background-color: #F5E6E8;
+  border-color: #C94747;
+  transform: scale(1.01);
+  cursor: pointer;
+  z-index: 10; /* Ensure the scaled element renders above others */
+}
+
+/* The best career and networking events around Stanford, Palo Alto, and SF all in one place
+Adjusting font for "Events" title */
+h2 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: var(--font-family-header);
+  text-align: center;
+  display: inline-block;
+  width: fit-content;  /* Let width adjust to fit content */
+  padding: 1.5rem 8.7rem;
+}
+/*Your guide to everything happening on Stanford.   linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%); */
+/* For location text */
+.event-item .location {
+  /*margin: 0.5rem 0;
+  font-size: 1rem;
+  font-weight: bold;*/
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;  /* Ensure the container fits the text */
+  width: fit-content;  /* Adjust width to fit the text content */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f5efe1;
+}
+
+/*body {
+background: var(--color-bg)
+}*/
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+.gradient__bg {
+  /* global 94%+ browsers support */
+  background: #f5efe1
+  /*background: linear-gradient(90deg, rgba(2, 128, 191, 1) 1%, rgba(63, 72, 134, 1) 100%);*/
+}
+
+.gradient__text {
+  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;  /* Ensure the container fits the text */
+  width: fit-content;  /* Adjust width to fit the text content */
+}
+
+.section__padding {
+  padding: 4rem 6rem;
+}
+
+.section__margin {
+  margin: 4rem 6rem;
+}
+
+.scale-up-center {
+	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+	        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+
+
+
+
+
+
+
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: var(--font-family);
+}
+
+.login-page h1 {
+  font-family: var(--font-family-header);
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.login-page h1 .gradient__text {
+  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-page p {
+  font-family: var(--font-family);
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-page .sign-in-btn {
+  background-color: #8C1515;
+  color: white;
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.login-page .sign-in-btn:hover {
+  transform: scale(1.05);
+}
+/*
+
+MAKE IT ALL GRADIENT PINK:
+
+.login-page .sign-in-btn {
+  background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+  color: white;
+  font-family: var(--font-family);
+  font-size: 1.25rem;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.login-page .sign-in-btn:hover {
+  transform: scale(1.05);
+}
+
+/*
+
+Outer box outline without curvy corners, however able to adjust thickness
+
+.gradient-outline-box {
+  border: 4px solid;   <---- ADJUST THICKNESS
+  border-image: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+  border-image-slice: 1;
+  border-radius: 25px; 
+  padding: 7rem 9rem;
+  display: inline-block;
+  text-align: center;
+}
+*/
+
+
+.gradient-outline-box {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border-radius: 25px;
+  background: #f5efe1;
+  padding: clamp(3rem, 5vw, 7rem) clamp(4rem, 7vw, 9rem);
+  max-width: 90vw;
+  margin: 1rem;
+}
+
+.gradient-outline-box::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  z-index: -1;
+  border-radius: 25px; /* Matches the parent border-radius */
+  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+}
+
+@media screen and (max-width: 768px) {
+  .login-page h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  
+  .login-page p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+  }
+  
+  .login-page .sign-in-btn {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+
+
+
+
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+            transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .section__padding {
+    padding: 4rem;
+  }
+  .section__margin {
+    margin: 4rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .section__padding {
+    padding: 4rem 2rem;
+  }
+  .section__margin {
+    margin: 4rem 2rem;
+  }
+}
