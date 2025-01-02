@@ -963,11 +963,6 @@ Outer box outline without curvy corners, however able to adjust thickness
   max-width: 100%;
 }
 
-.event-list {
-  width: 100%;
-  padding: 0;
-}
-
 .field-filter {
   width: 100%;
   margin: 0.5rem auto;
@@ -1067,24 +1062,29 @@ h2 {
   font-size: 10px;
   line-height: 20px;
 }
+.event-list-container {
+  display: flex;
+  justify-content: center; /* Centers the content within the container */
+}
 
 .event-list {
-  width: 100%;
-  margin: -10px auto 10px auto;
+  width: 100%; /* Adjust width to take up 80% of the container */
+  margin: 0 auto; /* Centers the list within the container */
 }
 
 .event-item {
-  width: 95%;
+  width: 95%; /* Optional: Adjust event-item width if needed */
 }
 
 h2 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   padding: 3.5rem 2rem;
 }
 
 .field-filter {
   width: 90%;
   margin: 0 auto 10px;
+  position: relative;
 }
 
 .event-date.today {
