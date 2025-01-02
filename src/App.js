@@ -662,7 +662,7 @@ const MainPage = ({ user, onSignOut }) => {
         <div className="gradient__bg">
           <Navbar user={user} onSignOut={onSignOut} />
         </div>
-        <h2>Your guide to everything happening on Stanford.</h2>
+        <h2>Your guide to everything happening at Stanford.</h2>
         <Header events={events} />
         <Footer />
       </div>

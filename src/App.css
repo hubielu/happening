@@ -1158,6 +1158,7 @@ Outer box outline without curvy corners, however able to adjust thickness
     transform: translateX(-50%);
     box-sizing: border-box;
     font-size: 0.2rem;
+    
   }
 
   /* Center the title text */
@@ -1195,4 +1196,46 @@ Outer box outline without curvy corners, however able to adjust thickness
     padding: 0 15px;
     margin: 10px auto;
   }
+
+  .NI__header-content__input {
+    width: 100%;
+    display: flex;
+    flex-direction: row; /* Change back to row from column */
+    gap: 0; /* Remove gap */
+  }
+
+  .NI__header-content__input input {
+    width: 100%;
+    min-width: 175px;
+    font-size: 16px;
+    padding: 0 15px;
+  }
+
+  .NI__header-content__input button {
+    flex: 0.6;
+    min-height: 50px;
+    font-size: 20px;
+    line-height: 28px;
+    background: linear-gradient(90deg, rgba(183, 110, 231, 1) 0%, rgba(233, 145, 124, 1) 76%, rgba(243, 151, 103, 1) 100%);
+    border: none;
+    padding: 0 1rem;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+  }
+
+  .NI__header-content p {
+    text-align: center;
+    width: 100vw;
+    max-width: 375px; /* Match container width */
+    margin: 0.2rem auto;
+    font-size: 0.85rem;
+    line-height: 1;
+    padding: 0 20px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+  }
+
+  
 }
