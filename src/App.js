@@ -611,12 +611,12 @@ const MainPage = ({ user, onSignOut }) => {
 
   useEffect(() => {
     let isMounted = true;
-  
     const fetchEvents = async () => {
       if (!isMounted) return;
       setIsLoading(true);
       try {
-        const response = await axios.get('http://localhost:5001/events');
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+        const response = await axios.get(`${apiUrl}/events`);
         if (isMounted) {
           const filteredEvents = filterUpcomingEvents(response.data);
           setEvents(prevEvents => {
@@ -632,10 +632,10 @@ const MainPage = ({ user, onSignOut }) => {
         if (isMounted) setIsLoading(false);
       }
     };
-  
+
     fetchEvents();
     const interval = setInterval(fetchEvents, 30000);
-  
+
     return () => {
       isMounted = false;
       clearInterval(interval);
@@ -669,6 +669,7 @@ const MainPage = ({ user, onSignOut }) => {
     </>
   );
 };
+
 
 
 const App = () => {
