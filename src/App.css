@@ -1954,3 +1954,115 @@ Outer box outline without curvy corners, however able to adjust thickness
 
 
 
+/*
+@media screen and (min-width: 1201px) {
+  /* Newsletter container adjustments 
+  .NI__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 2rem 6rem;
+  }
+
+  .NI__header-content {
+    width: 42%;
+    max-width: 500px;
+    margin-right: 0;
+    padding: 2.4rem 0;
+  }
+
+  /* Title and text adjustments 
+  .NI__header-title h1 {
+    font-size: 35px;
+    line-height: 50px;
+    letter-spacing: 0.01em;
+    text-align: left;
+    margin-bottom: 0.2rem;
+  }
+
+  .NI__header-content p {
+    font-size: 16px;
+    line-height: 28px;
+    text-align: left;
+    margin: 0.2rem 0;
+    width: 100%;
+  }
+
+  /* Email input container 
+  .NI__header-content__input {
+    width: 100%;
+    margin: 2rem 0 1rem;
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+  }
+
+  /* Email input field
+  .NI__header-content__input input {
+    flex: 2;
+    width: 100%;
+    min-height: 50px;
+    font-size: 20px;
+    line-height: 28px;
+    border: 1.5px solid #8c1515;
+    border-radius: 5px 0 0 5px;
+    padding: 0 1rem;
+  }
+
+  /* Subscribe button 
+  .NI__header-content__input button {
+    flex: 0.6;
+    min-height: 50px;
+    font-size: 20px;
+    line-height: 28px;
+    border-radius: 0 5px 5px 0;
+    padding: 0 1rem;
+  }
+
+  /* Event list container adjustments 
+  .event-list-container {
+    width: 91.3%;
+    margin: -30px auto 20px auto;
+    right: 1.5rem;
+  }
+
+  /* Field filter adjustments 
+  .field-filter {
+    width: 35%;
+    position: relative;
+    left: -13.6rem;
+    bottom: 7px;
+  }
+
+  h2 {
+    padding-bottom: 5rem;
+  }
+
+  .NI__header-content__input input {
+    flex: 2;
+    width: 100%;
+    min-height: 50px;
+    font-size: 18px; /* Reduced from 20px 
+    line-height: 28px;
+    border: 1.5px solid #8c1515;
+    border-radius: 5px 0 0 5px;
+    padding: 0 1rem;
+  }
+
+  /* Input placeholder text 
+  .NI__header-content__input input::placeholder {
+    font-size: 18px; /* Match input font size 
+    color: #666;
+  }
+
+  /* Subscribe button 
+  .NI__header-content__input button {
+    flex: 0.6;
+    min-height: 50px;
+    font-size: 18px !important; /* Force font size change 
+    line-height: 28px;
+    border-radius: 0 5px 5px 0;
+    padding: 0 1rem;
+  }
+}
+*/
