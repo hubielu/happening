@@ -706,11 +706,11 @@ const App = () => {
     <ParallaxProvider>
       <Router>
         <Routes>
+          <Route path="/" element={user ? <Navigate to="/stanford" /> : <LoginPage onSignIn={signInWithGoogle} />} />
           <Route path="/login" element={user ? <Navigate to="/stanford" /> : <LoginPage onSignIn={signInWithGoogle} />} />
           <Route path="/stanford" element={user ? <MainPage user={user} onSignOut={handleSignOut} /> : <Navigate to="/login" />} />
           <Route path="/sitemap.xml" element={<Sitemap />} />
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </ParallaxProvider>
