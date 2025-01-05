@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { initializeApp, applicationDefault } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const cors = require('cors');
@@ -10,7 +11,12 @@ initializeApp({
 
 const db = getFirestore();
 const app = express();
-app.use(cors()); // Allow cross-origin requests (from your frontend)
+
+// Allow cross-origin requests (from your frontend)
+app.use(cors());
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Endpoint to fetch events from Firestore
 app.get('/api/events', async (req, res) => {
@@ -28,7 +34,12 @@ app.get('/api/events', async (req, res) => {
   }
 });
 
-// Start the Express server
-app.listen(process.env.PORT || 5001, () => {
-  console.log('Server is running on http://localhost:5001 port={}', process.env.PORT);
+// For any request that doesn't match the above, send back the React app's index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
