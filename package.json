@@ -19,7 +19,8 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
-    "react-scroll-parallax": "^3.4.5"
+    "react-scroll-parallax": "^3.4.5",
+    "workbox-window": "^7.3.0"
   },
   "scripts": {
     "start": "concurrently \"node server.js\" \"react-scripts start\"",
