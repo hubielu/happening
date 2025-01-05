@@ -1,4 +1,4 @@
-import React, { useState, useEffect, act, useMemo } from 'react';
+import React, { useState, useEffect, act, useMemo, lazy, Suspense } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import { auth, provider, signInWithPopup, signOut } from './firebase';
@@ -14,7 +14,6 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { FaPizzaSlice } from "react-icons/fa";
 import { GiBoba } from "react-icons/gi";
 import { Helmet } from 'react-helmet';
-import React, { lazy, Suspense } from 'react';
 {/*import people from 'assets/people.png';
 import './header.css';*/}
 
