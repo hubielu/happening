@@ -274,8 +274,8 @@ const EventList = ({ events }) => {
 
 
 
-
 const NewsletterSubscription = lazy(() => import('./components/NewsletterSubscription.jsx'));
+
 
 
 
