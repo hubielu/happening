@@ -1,212 +1,19 @@
-import React, { useState, useEffect, act, useMemo, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Navigate, Routes } from 'react-router-dom';
 import { auth, provider, signInWithPopup, signOut } from './firebase';
-import { Footer, Blog, Possibility, Features, WhatNETWORKINSIDER } from './containers';
-import { Brand, CTA, Navbar } from './components';
+import { Navbar } from './components';
 import './App.css';
-import { Parallax } from 'react-scroll-parallax';
 import { ParallaxProvider } from 'react-scroll-parallax';
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
-import { CiLocationOn } from "react-icons/ci";
-import { FiArrowUpRight } from "react-icons/fi";
 import { FaPizzaSlice } from "react-icons/fa";
 import { GiBoba } from "react-icons/gi";
 import { Helmet } from 'react-helmet';
-import { PiDownloadSimpleBold } from 'react-icons/pi';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { setPersistence, browserLocalPersistence, onAuthStateChanged } from 'firebase/auth';
 
 
 
+
 const Sitemap = lazy(() => import('./sitemap.xml'));
-
-
-
-
-const Header = ({ events }) => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [isSticky, setIsSticky] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const handleSubscribe = async (e) => {
-    e.preventDefault();
-    if (email) {
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        // Trigger Google Auth popup
-        const result = await signInWithPopup(auth, provider);
-        const userEmail = result.user.email;
-        
-        // Verify entered email matches authenticated email
-        if (email !== userEmail) {
-          setError("Please try again.");
-          setIsLoading(false);
-          return;
-        }
-
-        // Verify Stanford email
-        if (!userEmail.endsWith('@stanford.edu')) {
-          setError('Please use your Stanford email address');
-          setIsLoading(false);
-          return;
-        }
-
-        const url = 'https://script.google.com/macros/s/AKfycbzBKpjnDvlikSXeYdbxFv11QG-J7zHEdq_TvYtWQs9QcSQQuUcSyOpdlIMOYOJIsG18/exec';
-        await fetch(url, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: 'email=' + encodeURIComponent(email)
-        });
-
-        setIsSubscribed(true);
-        setEmail('');
-        setTimeout(() => setIsSubscribed(false), 2000);
-
-      } catch (error) {
-        setError('Authentication required to subscribe');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  return (
-    <div className={`NI__header section__padding ${isSticky ? 'sticky' : ''}`} id="home">
-      <div className="NI__header-image">
-        <EventList events={events} />
-      </div>
-      <div className="NI__header-content">
-        <div className="NI__header-title">
-          <h1 className="gradient__text">Weekly Newsletter</h1>
-        </div>
-        <p>We send a weekly newsletter on Monday at 11am featuring that week's events.</p>
-        <form onSubmit={handleSubscribe} className="NI__header-content__input">
-          <input 
-            type="email" 
-            placeholder="Your Email Address" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            disabled={isLoading}
-          />
-          <button 
-            type="submit" 
-            className={isSubscribed ? 'subscribed' : ''}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Subscribing...' : isSubscribed ? 'Subscribed!' : 'Subscribe'}
-          </button>
-        </form>
-        {error && <p className="error-message">{error}</p>}
-        <div className="NI__header-content__people">
-        </div>
-      </div>
-    </div>
-  );
-};
-
-
-
-
-
-
-
-
-
-const NewsletterSubscription = ({ user }) => {
-  const [subscribed, setSubscribed] = useState(false);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  const handleSubscribe = async () => {
-    try {
-      console.log("Attempting to subscribe with email:", user.email);
-      const response = await axios.post("http://localhost:5005/api/subscribe", {
-        email: user.email,
-        name: user.displayName
-      });
-      console.log("Subscription response:", response);
-      if (response.status === 200) {
-        setSubscribed(true);
-        alert("Subscribed successfully!");
-      }
-    } catch (error) {
-      console.error("Subscription error:", error.response?.data || error.message);
-      alert("Subscription failed. Please try again.");
-    }
-  };
-  
-  const handleUnsubscribe = async () => {
-    try {
-      const response = await axios.post("http://localhost:5005/api/unsubscribe", {
-        email: user.email
-      });
-      if (response.status === 200) {
-        setSubscribed(false);
-        setDropdownVisible(false);
-      }
-    } catch (error) {
-      console.error("Unsubscription error:", error);
-      alert("Unsubscription failed. Please try again.");
-    }
-  };
-
-  return (
-    <div className="newsletter-subscription">
-      {subscribed ? (
-        <button
-          className="subscribe-btn subscribed"
-          onClick={() => setDropdownVisible(!dropdownVisible)}
-        >
-          Subscribed
-        </button>
-      ) : (
-        <button className="subscribe-btn" onClick={handleSubscribe}>
-          Subscribe
-        </button>
-      )}
-      {dropdownVisible && (
-        <div className="dropdown-menu">
-          <button className="unsubscribe-btn" onClick={handleUnsubscribe}>
-            Unsubscribe
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-
-
-
-
-
-
 
 
 
@@ -227,6 +34,7 @@ const isToday = (dateString) => {
 
 
 const LoginPage = lazy(() => import('./components/LoginPage'));
+
 
 
 
@@ -467,6 +275,130 @@ const EventList = ({ events }) => {
 
 
 
+
+const NewsletterSubscription = lazy(() => import('./components/NewsletterSubscription.jsx'));
+
+
+
+
+
+const Header = ({ events }) => {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    if (email) {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        // Trigger Google Auth popup
+        const result = await signInWithPopup(auth, provider);
+        const userEmail = result.user.email;
+
+        // Verify entered email matches authenticated email
+        if (email !== userEmail) {
+          setError('Please try again.');
+          setIsLoading(false);
+          return;
+        }
+
+        // Verify Stanford email
+        if (!userEmail.endsWith('@stanford.edu')) {
+          setError('Please use your Stanford email address');
+          setIsLoading(false);
+          return;
+        }
+
+        const url = 'https://script.google.com/macros/s/AKfycbzBKpjnDvlikSXeYdbxFv11QG-J7zHEdq_TvYtWQs9QcSQQuUcSyOpdlIMOYOJIsG18/exec';
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'email=' + encodeURIComponent(email),
+        });
+
+        setIsSubscribed(true);
+        setEmail('');
+        setTimeout(() => setIsSubscribed(false), 2000);
+
+      } catch (error) {
+        setError('Authentication required to subscribe');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  return (
+    <div className={`NI__header section__padding ${isSticky ? 'sticky' : ''}`} id="home">
+      <div className="NI__header-image">
+        <EventList events={events} />
+      </div>
+      <div className="NI__header-content">
+        <div className="NI__header-title">
+          <h1 className="gradient__text">Weekly Newsletter</h1>
+        </div>
+        <p>We send a weekly newsletter on Monday at 11am featuring that week's events.</p>
+        <form onSubmit={handleSubscribe} className="NI__header-content__input">
+          <input
+            type="email"
+            placeholder="Your Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={isLoading}
+          />
+          <button
+            type="submit"
+            className={isSubscribed ? 'subscribed' : ''}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Subscribing...' : isSubscribed ? 'Subscribed!' : 'Subscribe'}
+          </button>
+        </form>
+        {error && <p className="error-message">{error}</p>}
+        <div className="NI__header-content__people"></div>
+      </div>
+      <Suspense fallback={<div>Loading newsletter...</div>}>
+        <NewsletterSubscription />
+      </Suspense>
+    </div>
+  );
+};
+
+
+
+
+
+
+
+const Footer = lazy(() => import('./containers/footer/Footer.jsx'));
+
+
+
 const Modal = lazy(() => import('./components/ModalComponent'));
 
 
@@ -476,15 +408,21 @@ const Modal = lazy(() => import('./components/ModalComponent'));
 const MainPage = ({ user, onSignOut }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
+    const controller = new AbortController();
+
     const fetchEvents = async () => {
       if (!isMounted) return;
       setIsLoading(true);
+      setError(null);
       try {
         const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
-        const response = await axios.get(`${apiUrl}/events`);
+        const response = await axios.get(`${apiUrl}/events`, {
+          signal: controller.signal
+        });
         if (isMounted) {
           const filteredEvents = filterUpcomingEvents(response.data);
           setEvents(prevEvents => {
@@ -495,7 +433,9 @@ const MainPage = ({ user, onSignOut }) => {
           });
         }
       } catch (error) {
+        if (error.name === 'AbortError') return;
         console.error('Error fetching events:', error);
+        setError('Failed to fetch events. Please try again later.');
       } finally {
         if (isMounted) setIsLoading(false);
       }
@@ -506,18 +446,19 @@ const MainPage = ({ user, onSignOut }) => {
 
     return () => {
       isMounted = false;
+      controller.abort();
       clearInterval(interval);
     };
   }, []);
 
-  const filterUpcomingEvents = (events) => {
+  const filterUpcomingEvents = useMemo(() => (events) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return events.filter(event => {
       const eventDate = new Date(event.date._seconds * 1000);
       return eventDate >= today;
     });
-  };
+  }, []);
 
   return (
     <>
@@ -531,7 +472,13 @@ const MainPage = ({ user, onSignOut }) => {
           <Navbar user={user} onSignOut={onSignOut} />
         </div>
         <h2>Your guide to everything happening at Stanford.</h2>
-        <Header events={events} />
+        {isLoading ? (
+          <p>Loading events...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <Header events={events} />
+        )}
         <Footer />
       </div>
     </>

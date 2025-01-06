@@ -35,7 +35,8 @@
     "build": "react-scripts build && npm run build-sw",
     "build-sw": "node ./src/sw-build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "analyze": "webpack-bundle-analyzer build/bundle-stats.json"
   },
   "eslintConfig": {
     "extends": [
@@ -57,6 +58,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.1.0",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

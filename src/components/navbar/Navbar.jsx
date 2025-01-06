@@ -3,19 +3,6 @@ import React from 'react';
 import ProfileDropdown from '../ProfileDropdown'; // Assuming ProfileDropdown is in the same directory
 import './navbar.css';
 
-{/*
-  
-  const Menu = () => (
-  <>
-    <p><a href="#home">Home</a></p>
-    <p><a href="#wNI">What is NI?</a></p>
-    <p><a href="#possibility">Open Air</a></p>
-    <p><a href="#features">Case Studies</a></p>
-    <p><a href="#blog">Library</a></p>
-  </>
-);
-
-*/}
 
 const Navbar = ({ user, onSignOut }) => {
   return (

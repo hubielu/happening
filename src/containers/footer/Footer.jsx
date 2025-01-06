@@ -5,7 +5,18 @@ import './footer.css';
 const Footer = () => (
   <div className="NI__footer section__padding">
     <div className="NI__footer-heading">
-      {/*<h1 className="gradient__text">Do you want to step in to the future before others</h1>
+    </div>
+
+    <div className="NI__footer-copyright">
+  <a href="mailto:happening.college@gmail.com">happening.college@gmail.com</a>
+</div>
+
+  </div>
+);
+
+export default Footer;
+
+{/*<h1 className="gradient__text">Do you want to step in to the future before others</h1>
     </div>
 
     <div className="NI__footer-btn">
@@ -36,13 +47,3 @@ const Footer = () => (
         <p>085-132567</p>
         <p>info@payme.net</p>
       </div>*/}
-    </div>
-
-    <div className="NI__footer-copyright">
-  <a href="mailto:happening.college@gmail.com">happening.college@gmail.com</a>
-</div>
-
-  </div>
-);
-
-export default Footer;
