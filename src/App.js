@@ -714,5 +714,4 @@ const App = () => {
     </ParallaxProvider>
   );
 };
-
 export default App;
