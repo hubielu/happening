@@ -1,3 +1,23 @@
+/*Infinite Scroll CSS */
+
+.loading-trigger {
+  height: 20px;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  text-align: center;
+  color: #666;
+  padding: 10px;
+  font-family: var(--font-family-header);
+}
+
+
+
+
+
+
+
 .Footer {
   display: flex;
   flex-direction: column;
@@ -895,6 +915,29 @@ a {
 .login-page .sign-in-btn:hover {
   transform: scale(1.05);
 }
+
+.gradient-outline-box {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  border-radius: 25px;
+  background: #f5efe1;
+  padding: clamp(3rem, 5vw, 7rem) clamp(4rem, 7vw, 9rem);
+  max-width: 90vw;
+  margin: 1rem;
+}
+
+.gradient-outline-box::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  z-index: -1;
+  border-radius: 25px; /* Matches the parent border-radius */
+  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
+}
 /*
 
 MAKE IT ALL GRADIENT PINK:
@@ -931,28 +974,7 @@ Outer box outline without curvy corners, however able to adjust thickness
 */
 
 
-.gradient-outline-box {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-  border-radius: 25px;
-  background: #f5efe1;
-  padding: clamp(3rem, 5vw, 7rem) clamp(4rem, 7vw, 9rem);
-  max-width: 90vw;
-  margin: 1rem;
-}
 
-.gradient-outline-box::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  z-index: -1;
-  border-radius: 25px; /* Matches the parent border-radius */
-  background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
-}
 @media screen and (max-width: 576px) {
   .Footer {
     padding: 1rem;

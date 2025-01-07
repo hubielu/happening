@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { CiLocationOn } from "react-icons/ci";
@@ -9,11 +9,42 @@ import { GiBoba } from "react-icons/gi";
 const ModalComponent = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
     const [isActive, setIsActive] = React.useState(false);
     const event = events[currentEventIndex];
+    const modalRef = useRef(null);
   
-    React.useEffect(() => {
+    useEffect(() => {
       const timer = setTimeout(() => setIsActive(true), 50);
-      return () => clearTimeout(timer);
-    }, []);
+      
+      // Preload next event's data
+      if (currentEventIndex < events.length - 1) {
+        const nextEvent = events[currentEventIndex + 1];
+        if (nextEvent) {
+          // Preload Google Maps data
+          const mapLink = document.createElement('link');
+          mapLink.rel = 'preload';
+          mapLink.as = 'fetch';
+          mapLink.href = `https://www.google.com/maps/search/${encodeURIComponent(nextEvent.location)}`;
+          mapLink.crossOrigin = 'anonymous';
+          document.head.appendChild(mapLink);
+
+          // Preload RSVP link if it exists
+          if (nextEvent.rsvp && nextEvent.rsvp.startsWith('http')) {
+            const rsvpLink = document.createElement('link');
+            rsvpLink.rel = 'preload';
+            rsvpLink.as = 'fetch';
+            rsvpLink.href = nextEvent.rsvp;
+            rsvpLink.crossOrigin = 'anonymous';
+            document.head.appendChild(rsvpLink);
+          }
+        }
+      }
+
+      return () => {
+        clearTimeout(timer);
+        // Clean up preload links
+        const preloadLinks = document.head.querySelectorAll('link[rel="preload"]');
+        preloadLinks.forEach(link => link.remove());
+      };
+    }, [currentEventIndex, events]);
   
     const handleClose = () => {
       setIsActive(false);
@@ -35,10 +66,14 @@ const ModalComponent = ({ events, currentEventIndex, onClose, onNext, onPrevious
     const formattedDate = formatEventDate(event.date._seconds);
   
     return (
-      <div className={`modal-overlay ${isActive ? 'active' : ''}`} onClick={handleClose}>
+      <div 
+        className={`modal-overlay ${isActive ? 'active' : ''}`} 
+        onClick={handleClose}
+        ref={modalRef}
+      >
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
           <button className="close-btn" onClick={handleClose}>
-            <IoClose size={20} className="icon-gradient" />
+            <IoClose size={20} className="icon-gradient" loading="lazy" />
           </button>
           <div className="navigation-buttons">
             <button
@@ -46,14 +81,14 @@ const ModalComponent = ({ events, currentEventIndex, onClose, onNext, onPrevious
               onClick={onPrevious}
               disabled={currentEventIndex === 0}
             >
-              <IoIosArrowUp size={20} className="icon-gradient" />
+              <IoIosArrowUp size={20} className="icon-gradient" loading="lazy" />
             </button>
             <button
               className="next-btn"
               onClick={onNext}
               disabled={currentEventIndex === events.length - 1}
             >
-              <IoIosArrowDown size={20} className="icon-gradient" />
+              <IoIosArrowDown size={20} className="icon-gradient" loading="lazy" />
             </button>
           </div>
           <h2>{event.title}</h2>
@@ -71,13 +106,14 @@ const ModalComponent = ({ events, currentEventIndex, onClose, onNext, onPrevious
             <CiLocationOn 
               className="location-icon"
               onClick={() => window.open(`https://www.google.com/maps/search/${encodeURIComponent(event.location)}`, '_blank')}
+              loading="lazy"
             />
             <span 
               className="location-text"
               onClick={() => window.open(`https://www.google.com/maps/search/${encodeURIComponent(event.location)}`, '_blank')}
             >
               {event.location}
-              <FiArrowUpRight className="arrow-icon" />
+              <FiArrowUpRight className="arrow-icon" loading="lazy" />
             </span>
           </div>
           <p>{event.description}</p>
@@ -106,18 +142,18 @@ const ModalComponent = ({ events, currentEventIndex, onClose, onNext, onPrevious
           <div className="modal-icons">
             {event.freefood === "yes" && (
               <span className="icon-tooltip" title="Free Food">
-                <FaPizzaSlice style={{ color: '#8C1515', fontSize: '24px', marginRight: '10px' }} />
+                <FaPizzaSlice style={{ color: '#8C1515', fontSize: '24px', marginRight: '10px' }} loading="lazy" />
               </span>
             )}
             {event.freeboba === "yes" && (
               <span className="icon-tooltip" title="Free Boba">
-                <GiBoba style={{ color: '#8C1515', fontSize: '30px' }} />
+                <GiBoba style={{ color: '#8C1515', fontSize: '30px' }} loading="lazy" />
               </span>
             )}
           </div>
         </div>
       </div>
     );
-  };
+};
 
-  export default ModalComponent;
+export default ModalComponent;

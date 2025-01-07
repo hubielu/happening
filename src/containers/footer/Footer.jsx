@@ -1,16 +1,13 @@
 import React from 'react';
-import gpt3Logo from '../../logo.svg';
 import './footer.css';
 
 const Footer = () => (
   <div className="NI__footer section__padding">
     <div className="NI__footer-heading">
     </div>
-
     <div className="NI__footer-copyright">
-  <a href="mailto:happening.college@gmail.com">happening.college@gmail.com</a>
-</div>
-
+      <a href="mailto:happening.college@gmail.com">happening.college@gmail.com</a>
+    </div>
   </div>
 );
 
