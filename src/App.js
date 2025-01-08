@@ -625,7 +625,6 @@ const MainPage = ({ user, onSignOut }) => {
   );
 };
 
-
 const Footer = lazy(() => import('./containers/footer/Footer'));
 const Sitemap = lazy(() => import('./sitemap.xml'));
 const Modal = lazy(() => import('./components/ModalComponent'));
