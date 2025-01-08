@@ -325,29 +325,27 @@ const EventList = ({ events }) => {
   const [selectedField, setSelectedField] = useState('all');
   const [cachedEvents, setCachedEvents] = useState({});
 
-  // Cache events in memory
   useEffect(() => {
-    const eventCache = {};
-    events.forEach(event => {
-      eventCache[event.id] = event;
-    });
-    setCachedEvents(eventCache);
+      // Ensure events is an array before processing
+      const eventsList = Array.isArray(events) ? events : [];
+      const eventCache = {};
+      eventsList.forEach(event => {
+          if (event && event.id) {
+              eventCache[event.id] = event;
+          }
+      });
+      setCachedEvents(eventCache);
   }, [events]);
 
   const filteredEvents = useMemo(() => {
-    const eventsList = Object.values(cachedEvents);
-    return selectedField === 'all' 
-      ? eventsList 
-      : eventsList.filter(event => event.field === selectedField);
+      const eventsList = Object.values(cachedEvents);
+      if (!Array.isArray(eventsList)) return [];
+      return selectedField === 'all' 
+          ? eventsList 
+          : eventsList.filter(event => event && event.field === selectedField);
   }, [cachedEvents, selectedField]);
 
-  const groupedEvents = useMemo(() => groupEventsByDate(filteredEvents), [filteredEvents]);
-
-  const flattenedEvents = useMemo(() => {
-    return groupedEvents.reduce((acc, { events }) => {
-      return [...acc, ...events];
-    }, []).sort((a, b) => a.date._seconds - b.date._seconds);
-  }, [groupedEvents]);
+  const groupedEvents = useMemo(() => groupEventsByDate(events, selectedField), [events, selectedField]);
 
   const hasTodayEvents = useMemo(() => {
     return groupedEvents.some(group => isToday(group.date));
@@ -385,7 +383,7 @@ const EventList = ({ events }) => {
   };
 
   const handleEventClick = (clickedEvent) => {
-    const index = flattenedEvents.findIndex(event => event.id === clickedEvent.id);
+    const index = events.findIndex(event => event.id === clickedEvent.id);
     if (index !== -1) {
       setSelectedEventIndex(index);
     }
@@ -397,10 +395,10 @@ const EventList = ({ events }) => {
 
   const handleNext = () => {
     setSelectedEventIndex(prev => 
-      prev < flattenedEvents.length - 1 ? prev + 1 : prev
+      prev < events.length - 1 ? prev + 1 : prev
     );
   };
-
+  
   const handlePrevious = () => {
     setSelectedEventIndex(prev => 
       prev > 0 ? prev - 1 : prev
@@ -472,12 +470,12 @@ const EventList = ({ events }) => {
         )}
         {selectedEventIndex !== null && (
           <Modal
-            events={flattenedEvents}
-            currentEventIndex={selectedEventIndex}
-            onClose={handleClose}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-          />
+          events={events}
+          currentEventIndex={selectedEventIndex}
+          onClose={handleClose}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+        />
         )}
       </div>
     </div>
@@ -494,98 +492,41 @@ const EventList = ({ events }) => {
 const MainPage = ({ user, onSignOut }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const EVENTS_PER_PAGE = 10;
-  
-  // Create a ref for intersection observer
-  const observerRef = useRef();
-  const loadingRef = useRef(null);
 
-  const fetchEvents = async (lastDocument = null) => {
-    if (!hasMore && lastDocument) return;
-    
+  const fetchEvents = async () => {
     setIsLoading(true);
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
-      const paginationParams = {
-        limit: EVENTS_PER_PAGE,
-        lastDoc: lastDocument ? lastDocument.date._seconds : null
-      };
-      
-      const response = await axios.get(`${apiUrl}/events`, { 
-        params: paginationParams 
-      });
-      
-      if (response.data.length < EVENTS_PER_PAGE) {
-        setHasMore(false);
-      }
-
+      const response = await axios.get(`${apiUrl}/events`);
       const filteredEvents = filterUpcomingEvents(response.data);
-      
-      setEvents(prevEvents => 
-        lastDocument 
-          ? [...prevEvents, ...filteredEvents]
-          : filteredEvents
-      );
-      
-      if (filteredEvents.length > 0) {
-        setLastDoc(filteredEvents[filteredEvents.length - 1]);
-      }
+      setEvents(filteredEvents);
     } catch (error) {
       console.error('Error fetching events:', error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  // Set up intersection observer
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '20px',
-      threshold: 0.1
-    };
-
-    observerRef.current = new IntersectionObserver((entries) => {
-      const [target] = entries;
-      if (target.isIntersecting && !isLoading && hasMore) {
-        fetchEvents(lastDoc);
-      }
-    }, options);
-
-    if (loadingRef.current) {
-      observerRef.current.observe(loadingRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [isLoading, hasMore, lastDoc]);
-
+  
   useEffect(() => {
     let isMounted = true;
-
     const initialFetch = async () => {
       if (!isMounted) return;
       await fetchEvents();
     };
-
     initialFetch();
-    
+  
     const interval = setInterval(() => {
       if (isMounted) {
         fetchEvents();
       }
     }, 30000);
-
+  
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
   }, []);
+  
 
   const filterUpcomingEvents = (events) => {
     const today = new Date();
@@ -615,9 +556,6 @@ const MainPage = ({ user, onSignOut }) => {
         </div>
         <h2>Your guide to everything happening at Stanford.</h2>
         <Header events={events} />
-        <div ref={loadingRef} className="loading-trigger">
-          {isLoading && <div className="loading-spinner">Loading events...</div>}
-        </div>
       </div>
     </>
   );
