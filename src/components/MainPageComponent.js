@@ -16,7 +16,7 @@ const MainPageComponent = ({ user, onSignOut }) => {
         setIsLoading(true);
         try {
           const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
-          const response = await axios.get(`${apiUrl}/events`);
+          const response = await axios.get(`${apiUrl}/api/events`);
           if (isMounted) {
             const filteredEvents = filterUpcomingEvents(response.data);
             setEvents(prevEvents => {
