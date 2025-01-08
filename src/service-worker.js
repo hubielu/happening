@@ -1,4 +1,4 @@
-// service-worker.js
+/* eslint-disable no-restricted-globals */
 
 const CACHE_NAME = 'network-insider-cache-v1';
 const urlsToCache = [
