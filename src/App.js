@@ -540,7 +540,6 @@ const MainPage = ({ user, onSignOut }) => {
   }, []);
   
 
-  
   const filterUpcomingEvents = (events) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -552,6 +551,7 @@ const MainPage = ({ user, onSignOut }) => {
       return false;
     });
   };
+  
   
 
   return (
@@ -729,10 +729,10 @@ const Modal = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
 };
 
 
+
+
+
 const Footer = lazy(() => import('./containers/footer/Footer'));
-
-
-
 const Sitemap = lazy(() => import('./sitemap.xml'));
 const NewsletterSection = lazy(() => import('./components/NewsletterSection'));
 
