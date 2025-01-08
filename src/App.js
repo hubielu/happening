@@ -500,11 +500,12 @@ const MainPage = ({ user, onSignOut }) => {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
       const response = await axios.get(`${apiUrl}/events`);
       
-      if (response.data && Array.isArray(response.data)) {
+      const contentType = response.headers['content-type'];
+      if (contentType && contentType.includes('application/json')) {
         const filteredEvents = filterUpcomingEvents(response.data);
         setEvents(filteredEvents);
       } else {
-        console.error('Invalid data format received from API:', response.data);
+        console.error('Invalid content type received:', contentType);
         setEvents([]);
       }
     } catch (error) {
@@ -514,6 +515,7 @@ const MainPage = ({ user, onSignOut }) => {
       setIsLoading(false);
     }
   };
+  
   
   
   
