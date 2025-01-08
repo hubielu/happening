@@ -729,12 +729,12 @@ const Modal = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
 };
 
 
-
+const NewsletterSection = lazy(() => import('./components/NewsletterSection'));
 
 
 const Footer = lazy(() => import('./containers/footer/Footer'));
 const Sitemap = lazy(() => import('./sitemap.xml'));
-const NewsletterSection = lazy(() => import('./components/NewsletterSection'));
+
 
 const App = () => {
   const [user, setUser] = useState(null);
