@@ -499,18 +499,22 @@ const MainPage = ({ user, onSignOut }) => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
       const response = await axios.get(`${apiUrl}/events`);
+      
       if (response.data && Array.isArray(response.data)) {
         const filteredEvents = filterUpcomingEvents(response.data);
         setEvents(filteredEvents);
       } else {
-        console.error('Invalid data format received from API');
+        console.error('Invalid data format received from API:', response.data);
+        setEvents([]);
       }
     } catch (error) {
       console.error('Error fetching events:', error);
+      setEvents([]);
     } finally {
       setIsLoading(false);
     }
   };
+  
   
   
   useEffect(() => {
@@ -538,8 +542,11 @@ const MainPage = ({ user, onSignOut }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return events.filter(event => {
-      const eventDate = new Date(event.date?._seconds * 1000);
-      return eventDate >= today;
+      if (event && event.date && event.date._seconds) {
+        const eventDate = new Date(event.date._seconds * 1000);
+        return eventDate >= today;
+      }
+      return false;
     });
   };
   
