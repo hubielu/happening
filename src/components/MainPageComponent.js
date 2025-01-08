@@ -32,7 +32,7 @@ const MainPageComponent = ({ user, onSignOut }) => {
           if (isMounted) setIsLoading(false);
         }
       };
-  
+
       fetchEvents();
       const interval = setInterval(fetchEvents, 30000);
   
@@ -69,5 +69,8 @@ const MainPageComponent = ({ user, onSignOut }) => {
       </>
     );
   };
+
+
+
 
   export default MainPageComponent;
