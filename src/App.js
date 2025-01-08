@@ -22,7 +22,6 @@ import { Helmet } from 'react-helmet';
 const Header = ({ events }) => {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -46,30 +45,28 @@ const Header = ({ events }) => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     if (email) {
-      setIsLoading(true);
       setError(null);
       
       try {
-        // Trigger Google Auth popup
         const result = await signInWithPopup(auth, provider);
         const userEmail = result.user.email;
         
-        // Verify entered email matches authenticated email
         if (email !== userEmail) {
           setError("Please try again.");
-          setIsLoading(false);
           return;
         }
 
-        // Verify Stanford email
         if (!userEmail.endsWith('@stanford.edu')) {
           setError('Please use your Stanford email address');
-          setIsLoading(false);
           return;
         }
 
         const url = 'https://script.google.com/macros/s/AKfycbzBKpjnDvlikSXeYdbxFv11QG-J7zHEdq_TvYtWQs9QcSQQuUcSyOpdlIMOYOJIsG18/exec';
-        await fetch(url, {
+        
+        setIsSubscribed(true);
+        setEmail('');
+        
+        fetch(url, {
           method: 'POST',
           mode: 'no-cors',
           headers: {
@@ -78,14 +75,13 @@ const Header = ({ events }) => {
           body: 'email=' + encodeURIComponent(email)
         });
 
-        setIsSubscribed(true);
-        setEmail('');
-        setTimeout(() => setIsSubscribed(false), 2000);
+        setTimeout(() => {
+          setIsSubscribed(false);
+        }, 2000);
 
       } catch (error) {
         setError('Authentication required to subscribe');
-      } finally {
-        setIsLoading(false);
+        setIsSubscribed(false);
       }
     }
   };
@@ -107,14 +103,13 @@ const Header = ({ events }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            disabled={isLoading}
+            disabled={isSubscribed}
           />
           <button 
             type="submit" 
             className={isSubscribed ? 'subscribed' : ''}
-            disabled={isLoading}
           >
-            {isLoading ? 'Subscribing...' : isSubscribed ? 'Subscribed!' : 'Subscribe'}
+            {isSubscribed ? 'Subscribed!' : 'Subscribe'}
           </button>
         </form>
         {error && <p className="error-message">{error}</p>}
@@ -124,6 +119,9 @@ const Header = ({ events }) => {
     </div>
   );
 };
+
+
+
 
 
 
