@@ -134,6 +134,7 @@ const Header = ({ events }) => {
 const NewsletterSubscription = ({ user }) => {
   const [subscribed, setSubscribed] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
 
   const handleSubscribe = async () => {
     try {
@@ -145,7 +146,13 @@ const NewsletterSubscription = ({ user }) => {
       console.log("Subscription response:", response);
       if (response.status === 200) {
         setSubscribed(true);
-        alert("Subscribed successfully!");
+        setTimeout(() => {
+          setFadeOut(true);
+          setTimeout(() => {
+            setSubscribed(false);
+            setFadeOut(false);
+          }, 500); // Duration of fade out effect
+        }, 2000); // Duration to show "Subscribed!"
       }
     } catch (error) {
       console.error("Subscription error:", error.response?.data || error.message);
@@ -170,18 +177,12 @@ const NewsletterSubscription = ({ user }) => {
 
   return (
     <div className="newsletter-subscription">
-      {subscribed ? (
-        <button
-          className="subscribe-btn subscribed"
-          onClick={() => setDropdownVisible(!dropdownVisible)}
-        >
-          Subscribed
-        </button>
-      ) : (
-        <button className="subscribe-btn" onClick={handleSubscribe}>
-          Subscribe
-        </button>
-      )}
+      <button
+        className={`subscribe-btn ${subscribed ? 'subscribed' : ''} ${fadeOut ? 'fade-out' : ''}`}
+        onClick={subscribed ? () => setDropdownVisible(!dropdownVisible) : handleSubscribe}
+      >
+        {subscribed ? 'Subscribed!' : 'Subscribe'}
+      </button>
       {dropdownVisible && (
         <div className="dropdown-menu">
           <button className="unsubscribe-btn" onClick={handleUnsubscribe}>
@@ -498,14 +499,19 @@ const MainPage = ({ user, onSignOut }) => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
       const response = await axios.get(`${apiUrl}/events`);
-      const filteredEvents = filterUpcomingEvents(response.data);
-      setEvents(filteredEvents);
+      if (response.data && Array.isArray(response.data)) {
+        const filteredEvents = filterUpcomingEvents(response.data);
+        setEvents(filteredEvents);
+      } else {
+        console.error('Invalid data format received from API');
+      }
     } catch (error) {
       console.error('Error fetching events:', error);
     } finally {
       setIsLoading(false);
     }
   };
+  
   
   useEffect(() => {
     let isMounted = true;
@@ -532,10 +538,12 @@ const MainPage = ({ user, onSignOut }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return events.filter(event => {
-      const eventDate = new Date(event.date._seconds * 1000);
+      const eventDate = new Date(event.date?._seconds * 1000);
       return eventDate >= today;
     });
   };
+  
+  
 
   return (
     <>
@@ -561,13 +569,162 @@ const MainPage = ({ user, onSignOut }) => {
   );
 };
 
+const Modal = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
+  const [isActive, setIsActive] = React.useState(false);
+  const event = events[currentEventIndex];
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsActive(true), 50);
+    
+    // Preload next event's data
+    if (currentEventIndex < events.length - 1) {
+      const nextEvent = events[currentEventIndex + 1];
+      if (nextEvent) {
+        // Preload Google Maps data
+        const mapLink = document.createElement('link');
+        mapLink.rel = 'preload';
+        mapLink.as = 'fetch';
+        mapLink.href = `https://www.google.com/maps/search/${encodeURIComponent(nextEvent.location)}`;
+        mapLink.crossOrigin = 'anonymous';
+        document.head.appendChild(mapLink);
+
+        // Preload RSVP link if it exists
+        if (nextEvent.rsvp && nextEvent.rsvp.startsWith('http')) {
+          const rsvpLink = document.createElement('link');
+          rsvpLink.rel = 'preload';
+          rsvpLink.as = 'fetch';
+          rsvpLink.href = nextEvent.rsvp;
+          rsvpLink.crossOrigin = 'anonymous';
+          document.head.appendChild(rsvpLink);
+        }
+      }
+    }
+
+    return () => {
+      clearTimeout(timer);
+      // Clean up preload links
+      const preloadLinks = document.head.querySelectorAll('link[rel="preload"]');
+      preloadLinks.forEach(link => link.remove());
+    };
+  }, [currentEventIndex, events]);
+
+  const handleClose = () => {
+    setIsActive(false);
+    setTimeout(onClose, 300);
+  };
+
+  const formatEventDate = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    const options = { weekday: 'long', month: 'long', day: 'numeric' };
+    const timeOptions = { hour: 'numeric', minute: '2-digit' };
+    return {
+      date: date.toLocaleDateString(undefined, options),
+      time: date.toLocaleTimeString(undefined, timeOptions),
+      day: date.getDate(),
+      month: date.toLocaleString('en-US', { month: 'short' }).toUpperCase()
+    };
+  };
+
+  const formattedDate = formatEventDate(event.date._seconds);
+
+  return (
+    <div 
+      className={`modal-overlay ${isActive ? 'active' : ''}`} 
+      onClick={handleClose}
+      ref={modalRef}
+    >
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="close-btn" onClick={handleClose}>
+          <IoClose size={20} className="icon-gradient" loading="lazy" />
+        </button>
+        <div className="navigation-buttons">
+          <button
+            className="prev-btn"
+            onClick={onPrevious}
+            disabled={currentEventIndex === 0}
+          >
+            <IoIosArrowUp size={20} className="icon-gradient" loading="lazy" />
+          </button>
+          <button
+            className="next-btn"
+            onClick={onNext}
+            disabled={currentEventIndex === events.length - 1}
+          >
+            <IoIosArrowDown size={20} className="icon-gradient" loading="lazy" />
+          </button>
+        </div>
+        <h2>{event.title}</h2>
+        <div className="event-time-container">
+          <div className="calendar-icon">
+            <div className="calendar-month">{formattedDate.month}</div>
+            <div className="calendar-day">{formattedDate.day}</div>
+          </div>
+          <div className="event-date-time">
+            <div className="event-date">{formattedDate.date}</div>
+            <div className="event-time">{formattedDate.time}</div>
+          </div>
+        </div>
+        <div className="location-container">
+          <CiLocationOn 
+            className="location-icon"
+            onClick={() => window.open(`https://www.google.com/maps/search/${encodeURIComponent(event.location)}`, '_blank')}
+            loading="lazy"
+          />
+          <span 
+            className="location-text"
+            onClick={() => window.open(`https://www.google.com/maps/search/${encodeURIComponent(event.location)}`, '_blank')}
+          >
+            {event.location}
+            <FiArrowUpRight className="arrow-icon" loading="lazy" />
+          </span>
+        </div>
+        <p>{event.description}</p>
+        <div className="rsvp-section">
+          <h3>Registration</h3>
+          {event && event.rsvp ? (
+            <div>
+              <p>Welcome! To join the event, please register below.</p>
+              <button 
+                className="rsvp-button"
+                onClick={() => {
+                  if (event.rsvp && event.rsvp.startsWith('http')) {
+                    window.open(event.rsvp, '_blank');
+                  } else {
+                    console.error('Invalid RSVP URL:', event.rsvp);
+                  }
+                }}
+              >
+                RSVP here
+              </button>
+            </div>
+          ) : (
+            <p className="no-rsvp">No RSVP required</p>
+          )}
+        </div>
+        <div className="modal-icons">
+          {event.freefood === "yes" && (
+            <span className="icon-tooltip" title="Free Food">
+              <FaPizzaSlice style={{ color: '#8C1515', fontSize: '24px', marginRight: '10px' }} loading="lazy" />
+            </span>
+          )}
+          {event.freeboba === "yes" && (
+            <span className="icon-tooltip" title="Free Boba">
+              <GiBoba style={{ color: '#8C1515', fontSize: '30px' }} loading="lazy" />
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 
 
 
 const Footer = lazy(() => import('./containers/footer/Footer'));
 const Sitemap = lazy(() => import('./sitemap.xml'));
-const Modal = lazy(() => import('./components/ModalComponent'));
 const NewsletterSection = lazy(() => import('./components/NewsletterSection'));
 
 const App = () => {
