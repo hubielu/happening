@@ -497,27 +497,55 @@ const MainPage = ({ user, onSignOut }) => {
   
   const fetchEvents = async () => {
     try {
-      const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
       const response = await fetch(`${apiUrl}/api/events`);
       const data = await response.json();
-      setEvents(data);
-      setIsLoading(false);
+      
+      // Validate that data is an array before setting state
+      if (Array.isArray(data)) {
+        setEvents(data);
+      } else {
+        console.error('Received non-array data:', data);
+        setEvents([]);
+      }
     } catch (error) {
       console.error('Error fetching events:', error);
-      setIsLoading(false);
+      setEvents([]);
     }
   };
+  
 
   useEffect(() => {
-    fetchEvents();
+    let isMounted = true;
+  
+    const loadEvents = async () => {
+      try {
+        await fetchEvents();
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        if (isMounted) {
+          console.error('Error loading events:', error);
+          setIsLoading(false);
+        }
+      }
+    };
+  
+    loadEvents();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
+  
 
+
+  if (!events || !Array.isArray(events)) {
+    return <div>No events available</div>;
+  }
+  
   if (isLoading) {
     return <div>Loading events...</div>;
-  }
-
-  if (!events || events.length === 0) {
-    return <div>No events available</div>;
   }
 
   return (
