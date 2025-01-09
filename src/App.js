@@ -494,41 +494,32 @@ const MainPage = ({ user, onSignOut }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchEvents = async () => {
-    setIsLoading(true);
-    try {
-      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
-      console.log('Attempting to fetch from:', `${apiUrl}/api/events`); // Debug log
-      const response = await axios.get(`${apiUrl}/api/events`);
-      console.log('Response:', response.data); // Debug log
-    } catch (error) {
-      console.error('Full error object:', error);
-      console.error('Response data:', error.response?.data);
-      console.error('Request URL:', error.config?.url);
-    }
-  };
+const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
+
+const fetchEvents = async () => {
+  try {
+    console.log('Fetching from:', `${apiUrl}/api/events`);
+    const response = await fetch(`${apiUrl}/api/events`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    throw error;
+  }
+};
   
   
   
-  useEffect(() => {
-    let isMounted = true;
-    const initialFetch = async () => {
-      if (!isMounted) return;
-      await fetchEvents();
-    };
-    initialFetch();
-  
-    const interval = setInterval(() => {
-      if (isMounted) {
-        fetchEvents();
-      }
-    }, 30000);
-  
-    return () => {
-      isMounted = false;
-      clearInterval(interval);
-    };
-  }, []);
+useEffect(() => {
+  fetchEvents()
+    .then(events => {
+      setEvents(events);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, []);
+
   
 
   const filterUpcomingEvents = (events) => {
