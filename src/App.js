@@ -13,7 +13,7 @@ import { FaPizzaSlice } from "react-icons/fa";
 import { GiBoba } from "react-icons/gi";
 import { Helmet } from 'react-helmet';
 
-
+console.log('API URL:', process.env.REACT_APP_API_URL);
 
 
 
@@ -498,21 +498,13 @@ const MainPage = ({ user, onSignOut }) => {
     setIsLoading(true);
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      console.log('Attempting to fetch from:', `${apiUrl}/api/events`); // Debug log
       const response = await axios.get(`${apiUrl}/api/events`);
-      
-      const contentType = response.headers['content-type'];
-      if (contentType && contentType.includes('application/json')) {
-        const filteredEvents = filterUpcomingEvents(response.data);
-        setEvents(filteredEvents);
-      } else {
-        console.error('Invalid content type received:', contentType);
-        setEvents([]);
-      }
+      console.log('Response:', response.data); // Debug log
     } catch (error) {
-      console.error('Error fetching events!:', error);
-      setEvents([]);
-    } finally {
-      setIsLoading(false);
+      console.error('Full error object:', error);
+      console.error('Response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
     }
   };
   

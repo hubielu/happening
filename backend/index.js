@@ -13,7 +13,11 @@ const db = getFirestore();
 const app = express();
 
 // Allow cross-origin requests (from your frontend)
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://happening.college'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
