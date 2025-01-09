@@ -494,72 +494,37 @@ const EventList = ({ events }) => {
 const MainPage = ({ user, onSignOut }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
-
-const fetchEvents = async () => {
-  try {
-    console.log('Fetching from:', `${apiUrl}/api/events`);
-    const response = await fetch(`${apiUrl}/api/events`);
-    const data = await response.json();
-    setEvents(data); // Add this line to update the state
-    console.log('Fetched events:', data);
-  } catch (error) {
-    console.error('Error fetching events:', error);
-    throw error;
-  }
-};
-
   
-  
-  
-useEffect(() => {
-  fetchEvents()
-    .then(events => {
-      setEvents(events);
+  const fetchEvents = async () => {
+    try {
+      const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
+      const response = await fetch(`${apiUrl}/api/events`);
+      const data = await response.json();
+      setEvents(data);
       setIsLoading(false);
-    })
-    .catch(error => {
-      console.error('Error:', error);
+    } catch (error) {
+      console.error('Error fetching events:', error);
       setIsLoading(false);
-    });
-}, []);
-
-  
-
-  const filterUpcomingEvents = (events) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return events.filter(event => {
-      if (event && event.date && event.date._seconds) {
-        const eventDate = new Date(event.date._seconds * 1000);
-        return eventDate >= today;
-      }
-      return false;
-    });
+    }
   };
-  
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
   if (isLoading) {
     return <div>Loading events...</div>;
   }
-  
+
   if (!events || events.length === 0) {
     return <div>No events available</div>;
   }
-  
 
   return (
     <>
       <Helmet>
         <title>Happening</title>
-        <meta 
-          name="description" 
-          content="Discover and explore events happening at Stanford University. Your comprehensive guide to campus activities, talks, and more." 
-        />
-        <meta 
-          name="keywords" 
-          content="Stanford events, Stanford activities, Stanford student life, Stanford University" 
-        />
+        <meta name="description" content="Discover and explore events happening at Stanford University." />
       </Helmet>
       <div className="App">
         <div className="gradient__bg">
@@ -571,6 +536,7 @@ useEffect(() => {
     </>
   );
 };
+
 
 const Modal = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
   const [isActive, setIsActive] = React.useState(false);
