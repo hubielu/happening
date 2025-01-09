@@ -283,7 +283,8 @@ const ProfileDropdown = ({ user, onSignOut }) => {
 };
 
 const formatEventTime = (timestamp) => {
-  const date = new Date(timestamp * 1000); // Convert from seconds to milliseconds
+  if (!timestamp || !timestamp._seconds) return '';
+  const date = new Date(timestamp._seconds * 1000);
   const options = { hour: 'numeric', minute: 'numeric', hour12: true };
   return date.toLocaleTimeString('en-US', options);
 };
@@ -501,12 +502,14 @@ const fetchEvents = async () => {
     console.log('Fetching from:', `${apiUrl}/api/events`);
     const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();
-    return data;
+    setEvents(data); // Add this line to update the state
+    console.log('Fetched events:', data);
   } catch (error) {
     console.error('Error fetching events:', error);
     throw error;
   }
 };
+
   
   
   
@@ -514,9 +517,11 @@ useEffect(() => {
   fetchEvents()
     .then(events => {
       setEvents(events);
+      setIsLoading(false);
     })
     .catch(error => {
       console.error('Error:', error);
+      setIsLoading(false);
     });
 }, []);
 
@@ -534,6 +539,13 @@ useEffect(() => {
     });
   };
   
+  if (isLoading) {
+    return <div>Loading events...</div>;
+  }
+  
+  if (!events || events.length === 0) {
+    return <div>No events available</div>;
+  }
   
 
   return (
