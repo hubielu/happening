@@ -498,7 +498,7 @@ const MainPage = ({ user, onSignOut }) => {
     setIsLoading(true);
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
-      const response = await axios.get(`${apiUrl}/events`);
+      const response = await axios.get(`${apiUrl}/api/events`);
       
       const contentType = response.headers['content-type'];
       if (contentType && contentType.includes('application/json')) {
@@ -509,13 +509,12 @@ const MainPage = ({ user, onSignOut }) => {
         setEvents([]);
       }
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error('Error fetching events!:', error);
       setEvents([]);
     } finally {
       setIsLoading(false);
     }
   };
-  
   
   
   
