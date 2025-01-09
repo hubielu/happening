@@ -290,32 +290,34 @@ const formatEventTime = (timestamp) => {
 };
 
 const groupEventsByDate = (events, selectedField) => {
-  const groupedEvents = {};
+  if (!events || !Array.isArray(events)) {
+    return [];
+  }
   
-  if (!events) return [];
-
-  // Filter events if a field is selected
-  const filteredEvents = selectedField && selectedField !== 'all'
-    ? events.filter(event => event.field === selectedField)
+  const groupedEvents = {};
+  const filteredEvents = selectedField && selectedField !== 'all' 
+    ? events.filter(event => event && event.field === selectedField)
     : events;
 
   filteredEvents.forEach(event => {
-    const eventDate = new Date(event.date._seconds * 1000);
-    const dateKey = eventDate.toLocaleDateString();
-    
-    if (!groupedEvents[dateKey]) {
-      groupedEvents[dateKey] = [];
+    if (event && event.date && event.date._seconds) {
+      const eventDate = new Date(event.date._seconds * 1000);
+      const dateKey = eventDate.toLocaleDateString();
+      if (!groupedEvents[dateKey]) {
+        groupedEvents[dateKey] = [];
+      }
+      groupedEvents[dateKey].push(event);
     }
-    groupedEvents[dateKey].push(event);
   });
 
   return Object.keys(groupedEvents)
     .sort((a, b) => new Date(a) - new Date(b))
     .map(dateKey => ({
       date: dateKey,
-      events: groupedEvents[dateKey].sort((a, b) => a.date._seconds - b.date._seconds)
+      events: groupedEvents[dateKey]
     }));
 };
+
 
 
 
@@ -497,14 +499,15 @@ const MainPage = ({ user, onSignOut }) => {
   
   const fetchEvents = async () => {
     try {
+      console.log('Fetching from:', `${apiUrl}/api/events`);
       const response = await fetch(`${apiUrl}/api/events`);
       const data = await response.json();
       
-      // Validate that data is an array before setting state
+      // Ensure data is an array before setting state
       if (Array.isArray(data)) {
         setEvents(data);
       } else {
-        console.error('Received non-array data:', data);
+        console.error('Expected array but received:', typeof data);
         setEvents([]);
       }
     } catch (error) {
@@ -513,26 +516,26 @@ const MainPage = ({ user, onSignOut }) => {
     }
   };
   
+  
 
   useEffect(() => {
     let isMounted = true;
   
     const loadEvents = async () => {
       try {
-        await fetchEvents();
         if (isMounted) {
+          await fetchEvents();
           setIsLoading(false);
         }
       } catch (error) {
         if (isMounted) {
-          console.error('Error loading events:', error);
           setIsLoading(false);
+          console.error('Error loading events:', error);
         }
       }
     };
   
     loadEvents();
-  
     return () => {
       isMounted = false;
     };
