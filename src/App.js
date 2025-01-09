@@ -499,14 +499,15 @@ const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
 
 const fetchEvents = async () => {
   try {
+    const apiUrl = 'https://still-ocean-42866-8293e4663f90.herokuapp.com';
     console.log('Fetching from:', `${apiUrl}/api/events`);
     const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();
-    setEvents(data); // Add this line to update the state
-    console.log('Fetched events:', data);
+    setEvents(data);
+    setIsLoading(false);
   } catch (error) {
-    console.error('Error fetching events:', error);
-    throw error;
+    console.error('Error:', error);
+    setIsLoading(false);
   }
 };
 
@@ -546,7 +547,6 @@ useEffect(() => {
   if (!events || events.length === 0) {
     return <div>No events available</div>;
   }
-  
 
   return (
     <>
