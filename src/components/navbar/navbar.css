@@ -4,19 +4,20 @@
     border-radius: 50%;
     background-color: #f0f0f0;
     animation: pulse 1.5s infinite;
-  }
+}
   
-  @keyframes pulse {
+@keyframes pulse {
     0% { opacity: 0.6; }
     50% { opacity: 1; }
     100% { opacity: 0.6; }
-  }
+}
   
-  .NI__navbar {
+.NI__navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0rem;
+    background: linear-gradient(90deg, rgba(227, 251, 237, 1) 0%, rgba(255, 243, 216, 1) 34%, rgba(255, 243, 216, 1) 66%, rgba(227, 251, 237, 1) 100%);
 }
 
 .NI__navbar-links {
@@ -65,11 +66,9 @@
 }
 
 .gradient-text {
-    font-size: 3rem; /* Adjust as needed */
-    font-weight: bold; /* Optional for emphasis */
-    background: linear-gradient(90deg, rgba(200, 61, 61, 1) 15%, rgba(140, 21, 21, 1) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #2f5675;
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
@@ -119,17 +118,9 @@
     .NI__navbar-left {
       width: auto;
     }
-  }
+}
 
-
-
-
-
-
-
-
-
-  @media screen and (min-width: 577px) and (max-width: 768px) {
+@media screen and (min-width: 577px) and (max-width: 768px) {
     .NI__navbar {
         padding: 0.7rem;
         position: relative;
@@ -170,27 +161,9 @@
     .NI__navbar-left {
         width: auto;
     }
+}
 
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @media screen and (min-width: 769px) and (max-width: 992px) {
+@media screen and (min-width: 769px) and (max-width: 992px) {
     .NI__navbar {
         padding: 0.8rem;
         position: relative;
@@ -232,22 +205,6 @@
         width: auto;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @media screen and (min-width: 993px) and (max-width: 1200px) {
     .NI__navbar {
@@ -291,64 +248,3 @@
         width: auto;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-@media screen and (min-width: 1201px) {
-    .NI__navbar {
-        padding: 1.2rem;
-        position: relative;
-        height: 100px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 3rem;
-    }
-
-    .gradient-text {
-        font-size: 4rem;
-        margin: 0;
-        position: absolute;
-        top: 85%;
-        left: 2.5rem;
-        transform: translateY(-50%);
-        left: -8%;
-    }
-
-    .NI__navbar-profile {
-        padding: 0;
-        position: absolute;
-        top: 80%;
-        right: 3rem;
-        transform: translateY(-50%);
-    }
-
-    .NI__navbar-profile img {
-        width: 55px;
-        height: 55px;
-    }
-
-    /* Ensure other elements don't interfere 
-    .NI__navbar-links {
-        display: none;
-    }
-
-    .NI__navbar-left {
-        width: auto;
-    }
-}
-*/

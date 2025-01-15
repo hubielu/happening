@@ -13,16 +13,15 @@ import { FaPizzaSlice } from "react-icons/fa";
 import { GiBoba } from "react-icons/gi";
 import { Helmet } from 'react-helmet';
 
-console.log('API URL:', process.env.REACT_APP_API_URL);
 
 
 
 
 
 const Header = ({ events }) => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const [error, setError] = useState(null);
+  // const [email, setEmail] = useState('');
+  // const [isSubscribed, setIsSubscribed] = useState(false);
+  // const [error, setError] = useState(null);
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -42,49 +41,49 @@ const Header = ({ events }) => {
     };
   }, []);
 
-  const handleSubscribe = async (e) => {
-    e.preventDefault();
-    if (email) {
-      setError(null);
+  // const handleSubscribe = async (e) => {
+  //   e.preventDefault();
+  //   if (email) {
+  //     setError(null);
       
-      try {
-        const result = await signInWithPopup(auth, provider);
-        const userEmail = result.user.email;
+  //     try {
+  //       const result = await signInWithPopup(auth, provider);
+  //       const userEmail = result.user.email;
         
-        if (email !== userEmail) {
-          setError("Please try again.");
-          return;
-        }
+  //       if (email !== userEmail) {
+  //         setError("Please try again.");
+  //         return;
+  //       }
 
-        if (!userEmail.endsWith('@stanford.edu')) {
-          setError('Please use your Stanford email address');
-          return;
-        }
+  //       if (!userEmail.endsWith('@stanford.edu')) {
+  //         setError('Please use your Stanford email address');
+  //         return;
+  //       }
 
-        const url = 'https://script.google.com/macros/s/AKfycbzBKpjnDvlikSXeYdbxFv11QG-J7zHEdq_TvYtWQs9QcSQQuUcSyOpdlIMOYOJIsG18/exec';
+  //       const url = 'https://script.google.com/macros/s/AKfycbzBKpjnDvlikSXeYdbxFv11QG-J7zHEdq_TvYtWQs9QcSQQuUcSyOpdlIMOYOJIsG18/exec';
         
-        setIsSubscribed(true);
-        setEmail('');
+  //       setIsSubscribed(true);
+  //       setEmail('');
         
-        fetch(url, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: 'email=' + encodeURIComponent(email)
-        });
+  //       fetch(url, {
+  //         method: 'POST',
+  //         mode: 'no-cors',
+  //         headers: {
+  //           'Content-Type': 'application/x-www-form-urlencoded',
+  //         },
+  //         body: 'email=' + encodeURIComponent(email)
+  //       });
 
-        setTimeout(() => {
-          setIsSubscribed(false);
-        }, 2000);
+  //       setTimeout(() => {
+  //         setIsSubscribed(false);
+  //       }, 2000);
 
-      } catch (error) {
-        setError('Authentication required to subscribe');
-        setIsSubscribed(false);
-      }
-    }
-  };
+  //     } catch (error) {
+  //       setError('Authentication required to subscribe');
+  //       setIsSubscribed(false);
+  //     }
+  //   }
+  // };
 
   return (
     <div className={`NI__header section__padding ${isSticky ? 'sticky' : ''}`} id="home">
@@ -92,10 +91,10 @@ const Header = ({ events }) => {
         <EventList events={events} />
       </div>
       <div className="NI__header-content">
-        <div className="NI__header-title">
+        {/*<div className="NI__header-title">
           <h1 className="gradient__text">Weekly Newsletter</h1>
         </div>
-        <p>We send a weekly newsletter on Monday at 11am featuring that week's events.</p>
+        {/* <p>We send a weekly newsletter on Monday at 11am featuring that week's events.</p>
         <form onSubmit={handleSubscribe} className="NI__header-content__input">
           <input 
             type="email" 
@@ -112,14 +111,13 @@ const Header = ({ events }) => {
             {isSubscribed ? 'Subscribed!' : 'Subscribe'}
           </button>
         </form>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error}</p>} */}
         <div className="NI__header-content__people">
         </div>
       </div>
     </div>
   );
 };
-
 
 
 
@@ -283,41 +281,38 @@ const ProfileDropdown = ({ user, onSignOut }) => {
 };
 
 const formatEventTime = (timestamp) => {
-  if (!timestamp || !timestamp._seconds) return '';
-  const date = new Date(timestamp._seconds * 1000);
+  const date = new Date(timestamp * 1000); // Convert from seconds to milliseconds
   const options = { hour: 'numeric', minute: 'numeric', hour12: true };
   return date.toLocaleTimeString('en-US', options);
 };
 
 const groupEventsByDate = (events, selectedField) => {
-  if (!events || !Array.isArray(events)) {
-    return [];
-  }
-  
   const groupedEvents = {};
-  const filteredEvents = selectedField && selectedField !== 'all' 
-    ? events.filter(event => event && event.field === selectedField)
+  
+  if (!events) return [];
+
+  // Filter events if a field is selected
+  const filteredEvents = selectedField && selectedField !== 'all'
+    ? events.filter(event => event.field === selectedField)
     : events;
 
   filteredEvents.forEach(event => {
-    if (event && event.date && event.date._seconds) {
-      const eventDate = new Date(event.date._seconds * 1000);
-      const dateKey = eventDate.toLocaleDateString();
-      if (!groupedEvents[dateKey]) {
-        groupedEvents[dateKey] = [];
-      }
-      groupedEvents[dateKey].push(event);
+    const eventDate = new Date(event.date._seconds * 1000);
+    const dateKey = eventDate.toLocaleDateString();
+    
+    if (!groupedEvents[dateKey]) {
+      groupedEvents[dateKey] = [];
     }
+    groupedEvents[dateKey].push(event);
   });
 
   return Object.keys(groupedEvents)
     .sort((a, b) => new Date(a) - new Date(b))
     .map(dateKey => ({
       date: dateKey,
-      events: groupedEvents[dateKey]
+      events: groupedEvents[dateKey].sort((a, b) => a.date._seconds - b.date._seconds)
     }));
 };
-
 
 
 
@@ -496,66 +491,79 @@ const EventList = ({ events }) => {
 const MainPage = ({ user, onSignOut }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const fetchEvents = async () => {
+    setIsLoading(true);
     try {
-      console.log('Fetching from:', `${apiUrl}/api/events`);
-      const response = await fetch(`${apiUrl}/api/events`);
-      const data = await response.json();
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+      const response = await axios.get(`${apiUrl}/events`);
       
-      // Ensure data is an array before setting state
-      if (Array.isArray(data)) {
-        setEvents(data);
+      const contentType = response.headers['content-type'];
+      if (contentType && contentType.includes('application/json')) {
+        const filteredEvents = filterUpcomingEvents(response.data);
+        setEvents(filteredEvents);
       } else {
-        console.error('Expected array but received:', typeof data);
+        console.error('Invalid content type received:', contentType);
         setEvents([]);
       }
     } catch (error) {
       console.error('Error fetching events:', error);
       setEvents([]);
+    } finally {
+      setIsLoading(false);
     }
   };
   
   
-
+  
+  
   useEffect(() => {
     let isMounted = true;
-  
-    const loadEvents = async () => {
-      try {
-        if (isMounted) {
-          await fetchEvents();
-          setIsLoading(false);
-        }
-      } catch (error) {
-        if (isMounted) {
-          setIsLoading(false);
-          console.error('Error loading events:', error);
-        }
-      }
+    const initialFetch = async () => {
+      if (!isMounted) return;
+      await fetchEvents();
     };
+    initialFetch();
   
-    loadEvents();
+    const interval = setInterval(() => {
+      if (isMounted) {
+        fetchEvents();
+      }
+    }, 30000);
+  
     return () => {
       isMounted = false;
+      clearInterval(interval);
     };
   }, []);
   
 
-
-  if (!events || !Array.isArray(events)) {
-    return <div>No events available</div>;
-  }
+  const filterUpcomingEvents = (events) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return events.filter(event => {
+      if (event && event.date && event.date._seconds) {
+        const eventDate = new Date(event.date._seconds * 1000);
+        return eventDate >= today;
+      }
+      return false;
+    });
+  };
   
-  if (isLoading) {
-    return <div>Loading events...</div>;
-  }
+  
 
   return (
     <>
       <Helmet>
         <title>Happening</title>
-        <meta name="description" content="Discover and explore events happening at Stanford University." />
+        <meta 
+          name="description" 
+          content="Discover and explore events happening at Stanford University. Your comprehensive guide to campus activities, talks, and more." 
+        />
+        <meta 
+          name="keywords" 
+          content="Stanford events, Stanford activities, Stanford student life, Stanford University" 
+        />
       </Helmet>
       <div className="App">
         <div className="gradient__bg">
@@ -567,7 +575,6 @@ const MainPage = ({ user, onSignOut }) => {
     </>
   );
 };
-
 
 const Modal = ({ events, currentEventIndex, onClose, onNext, onPrevious }) => {
   const [isActive, setIsActive] = React.useState(false);
